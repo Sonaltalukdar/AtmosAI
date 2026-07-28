@@ -1,0 +1,191 @@
+// src/data/Location.js
+
+// Fixed demo dataset for 7 locations.
+// Used by WeatherCard, WeatherBackground and AirQuality.
+
+export const mockLocations = {
+  kolkata: {
+    location: "Kolkata, West Bengal",
+    date: "Today, 12 June",
+    temp: 29,
+    condition: "Partly Cloudy",
+    feelsLike: 31,
+    icon: "🌤️",
+    humidity: 75,
+    windSpeed: 12,
+    pressure: 1012,
+    uvIndex: "Moderate",
+    visibility: 8,
+    aqi: {
+      value: 32,
+      status: "Good",
+      statusColor: "#22c55e",
+      pollutants: [
+        { label: "PM2.5", value: "12 µg/m³", pct: 24 },
+        { label: "PM10", value: "28 µg/m³", pct: 40 },
+        { label: "O₃", value: "18 ppb", pct: 30 },
+        { label: "NO₂", value: "9 ppb", pct: 15 },
+      ],
+    },
+  },
+
+  delhi: {
+    location: "Delhi, India",
+    date: "Today, 12 June",
+    temp: 38,
+    condition: "Sunny",
+    feelsLike: 41,
+    icon: "☀️",
+    humidity: 28,
+    windSpeed: 8,
+    pressure: 1005,
+    uvIndex: "Very High",
+    visibility: 6,
+    aqi: {
+      value: 168,
+      status: "Unhealthy",
+      statusColor: "#ef4444",
+      pollutants: [
+        { label: "PM2.5", value: "95 µg/m³", pct: 88 },
+        { label: "PM10", value: "180 µg/m³", pct: 92 },
+        { label: "O₃", value: "42 ppb", pct: 60 },
+        { label: "NO₂", value: "38 ppb", pct: 55 },
+      ],
+    },
+  },
+
+  mumbai: {
+    location: "Mumbai, Maharashtra",
+    date: "Today, 12 June",
+    temp: 27,
+    condition: "Heavy Rain",
+    feelsLike: 29,
+    icon: "🌧️",
+    humidity: 88,
+    windSpeed: 22,
+    pressure: 998,
+    uvIndex: "Low",
+    visibility: 3,
+    aqi: {
+      value: 45,
+      status: "Moderate",
+      statusColor: "#eab308",
+      pollutants: [
+        { label: "PM2.5", value: "28 µg/m³", pct: 45 },
+        { label: "PM10", value: "50 µg/m³", pct: 50 },
+        { label: "O₃", value: "20 ppb", pct: 32 },
+        { label: "NO₂", value: "15 ppb", pct: 25 },
+      ],
+    },
+  },
+
+  chennai: {
+    location: "Chennai, Tamil Nadu",
+    date: "Today, 12 June",
+    temp: 30,
+    condition: "Thunderstorm",
+    feelsLike: 34,
+    icon: "⛈️",
+    humidity: 80,
+    windSpeed: 26,
+    pressure: 1001,
+    uvIndex: "Moderate",
+    visibility: 4,
+    aqi: {
+      value: 55,
+      status: "Moderate",
+      statusColor: "#eab308",
+      pollutants: [
+        { label: "PM2.5", value: "30 µg/m³", pct: 50 },
+        { label: "PM10", value: "48 µg/m³", pct: 48 },
+        { label: "O₃", value: "22 ppb", pct: 34 },
+        { label: "NO₂", value: "14 ppb", pct: 22 },
+      ],
+    },
+  },
+
+  hyderabad: {
+    location: "Hyderabad, Telangana",
+    date: "Today, 12 June",
+    temp: 26,
+    condition: "Windy",
+    feelsLike: 25,
+    icon: "🌬️",
+    humidity: 55,
+    windSpeed: 34,
+    pressure: 1008,
+    uvIndex: "Moderate",
+    visibility: 9,
+    aqi: {
+      value: 40,
+      status: "Good",
+      statusColor: "#22c55e",
+      pollutants: [
+        { label: "PM2.5", value: "18 µg/m³", pct: 30 },
+        { label: "PM10", value: "32 µg/m³", pct: 35 },
+        { label: "O₃", value: "16 ppb", pct: 26 },
+        { label: "NO₂", value: "10 ppb", pct: 17 },
+      ],
+    },
+  },
+
+  pune: {
+    location: "Pune, Maharashtra",
+    date: "Today, 12 June",
+    temp: 24,
+    condition: "Fog",
+    feelsLike: 23,
+    icon: "🌫️",
+    humidity: 68,
+    windSpeed: 6,
+    pressure: 1015,
+    uvIndex: "Low",
+    visibility: 1.5,
+    aqi: {
+      value: 90,
+      status: "Poor",
+      statusColor: "#f97316",
+      pollutants: [
+        { label: "PM2.5", value: "55 µg/m³", pct: 70 },
+        { label: "PM10", value: "95 µg/m³", pct: 75 },
+        { label: "O₃", value: "28 ppb", pct: 40 },
+        { label: "NO₂", value: "20 ppb", pct: 32 },
+      ],
+    },
+  },
+
+  ladakh: {
+    location: "Ladakh, India",
+    date: "Today, 12 June",
+    temp: -2,
+    condition: "Snow",
+    feelsLike: -6,
+    icon: "❄️",
+    humidity: 40,
+    windSpeed: 14,
+    pressure: 1020,
+    uvIndex: "High",
+    visibility: 10,
+    aqi: {
+      value: 12,
+      status: "Good",
+      statusColor: "#22c55e",
+      pollutants: [
+        { label: "PM2.5", value: "4 µg/m³", pct: 8 },
+        { label: "PM10", value: "9 µg/m³", pct: 12 },
+        { label: "O₃", value: "10 ppb", pct: 15 },
+        { label: "NO₂", value: "3 ppb", pct: 5 },
+      ],
+    },
+  },
+};
+
+export const locationList = [
+  { key: "kolkata", label: "Kolkata, West Bengal" },
+  { key: "delhi", label: "Delhi" },
+  { key: "mumbai", label: "Mumbai, Maharashtra" },
+  { key: "chennai", label: "Chennai, Tamil Nadu" },
+  { key: "hyderabad", label: "Hyderabad, Telangana" },
+  { key: "pune", label: "Pune, Maharashtra" },
+  { key: "ladakh", label: "Ladakh" },
+];

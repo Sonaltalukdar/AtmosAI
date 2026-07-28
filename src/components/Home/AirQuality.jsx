@@ -2,11 +2,12 @@ import { useState, useEffect } from "react";
 import { CircularProgressbar, buildStyles } from "react-circular-progressbar";
 import "react-circular-progressbar/dist/styles.css";
 import { Wind } from "lucide-react";
+import { useWeatherCondition } from "../../Context/WeatherContext.jsx";
 
 const AirQuality = () => {
-    const aqi = 32;
-    const status = "Good";
-    const statusColor = "#22c55e";
+    const { weatherData } = useWeatherCondition();
+    const { value: aqi, status, statusColor, pollutants } = weatherData.aqi;
+    const locationLabel = weatherData.location.split(",")[0]; // short label e.g. "Kolkata"
 
     const [displayAqi, setDisplayAqi] = useState(0);
 
@@ -25,13 +26,6 @@ const AirQuality = () => {
         return () => cancelAnimationFrame(raf);
     }, [aqi]);
 
-    const pollutants = [
-        { label: "PM2.5", value: "12 µg/m³", pct: 24 },
-        { label: "PM10", value: "28 µg/m³", pct: 40 },
-        { label: "O₃", value: "18 ppb", pct: 30 },
-        { label: "NO₂", value: "9 ppb", pct: 15 },
-    ];
-
     return (
         <div className="aqi-fade-in bg-transparent shadow-none p-8 flex flex-col box-border max-w-2xl">
 
@@ -41,7 +35,7 @@ const AirQuality = () => {
                     <Wind size={22} className="text-emerald-400 flex-shrink-0" />
                     <h3 className="text-white font-semibold text-xl">Air Quality Index</h3>
                 </div>
-                <span className="text-sm text-gray-400 whitespace-nowrap">Kolkata</span>
+                <span className="text-sm text-gray-400 whitespace-nowrap">{locationLabel}</span>
             </div>
 
             <div className="flex items-center gap-10" style={{ marginTop: "32px" }}>
@@ -51,7 +45,7 @@ const AirQuality = () => {
                     <div className="w-32 h-32">
                         <CircularProgressbar
                             value={displayAqi}
-                            maxValue={100}
+                            maxValue={200}
                             text={`${displayAqi}`}
                             styles={buildStyles({
                                 textColor: "#fff",
@@ -66,7 +60,7 @@ const AirQuality = () => {
                         {status}
                     </p>
                     <p className="text-center text-gray-500 text-xs mt-1 leading-snug">
-                        Little to no risk
+                        {status === "Good" ? "Little to no risk" : "Sensitive groups take care"}
                     </p>
                 </div>
 

@@ -260,3 +260,847 @@
 .chat-box-in {
   animation: chatBoxIn 2.2s cubic-bezier(0.22, 1, 0.36, 1) both;
 }
+
+/* ===== Animated Weather Background Effects ===== */
+/* Add this block to the END of src/styles/animation.css (don't remove existing content) */
+
+/* --- Sunny: soft pulsing sun rays --- */
+@keyframes sunPulse {
+  0%, 100% { opacity: 0.35; transform: scale(1); }
+  50% { opacity: 0.55; transform: scale(1.08); }
+}
+.weather-sun-glow {
+  position: absolute;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(255,220,120,0.55) 0%, rgba(255,180,60,0.15) 55%, transparent 75%);
+  animation: sunPulse 5s ease-in-out infinite;
+  filter: blur(2px);
+}
+
+/* --- Cloudy: drifting cloud shapes, parallax speeds --- */
+@keyframes cloudDrift {
+  0%   { transform: translateX(-15%); }
+  100% { transform: translateX(115%); }
+}
+.weather-cloud {
+  position: absolute;
+  background: rgba(255,255,255,0.18);
+  border-radius: 50%;
+  filter: blur(6px);
+  animation-name: cloudDrift;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+}
+
+/* --- Cloudy: real SVG cloud shapes drifting across the sky --- */
+@keyframes cloudShapeDrift {
+  0%   { transform: translateX(-25%); }
+  100% { transform: translateX(125%); }
+}
+.weather-cloud-shape {
+  position: absolute;
+  left: 0;
+  animation-name: cloudShapeDrift;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+}
+
+/* --- Rain: falling streaks --- */
+@keyframes rainFall {
+  0%   { transform: translateY(-10%); opacity: 0; }
+  10%  { opacity: 0.7; }
+  100% { transform: translateY(110vh); opacity: 0.2; }
+}
+.weather-raindrop {
+  position: absolute;
+  top: 0;
+  width: 2px;
+  background: linear-gradient(to bottom, transparent, rgba(180,210,255,0.6));
+  animation-name: rainFall;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+}
+
+/* ===========================
+   THUNDERSTORM
+=========================== */
+
+@keyframes lightningFlash{
+
+    0%,92%,100%{
+        opacity:0;
+    }
+
+    93%{
+        opacity:.55;
+    }
+
+    94%{
+        opacity:.05;
+    }
+
+    95%{
+        opacity:.40;
+    }
+
+    96%{
+        opacity:0;
+    }
+
+}
+
+.weather-lightning{
+
+    position:absolute;
+    inset:0;
+
+    background:
+        rgba(220,225,255,.9);
+
+    animation:
+        lightningFlash 7s ease-in-out infinite;
+
+    pointer-events:none;
+
+}
+
+/* =========================
+   FOG
+========================= */
+
+/* Sign Up button — animated gradient flow + glow */
+@keyframes gradientFlow {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+@keyframes signupPulse {
+  0%, 100% {
+    box-shadow: 0 8px 25px rgba(14, 165, 233, 0.4);
+  }
+  50% {
+    box-shadow: 0 8px 32px rgba(14, 165, 233, 0.7);
+  }
+}
+
+.signup-glow {
+  background: linear-gradient(120deg, #0ea5e9, #38bdf8, #0284c7, #0ea5e9);
+  background-size: 300% 300%;
+  animation: signupPulse 2.8s ease-in-out infinite, gradientFlow 6s ease infinite;
+}
+
+.signup-glow:hover {
+  animation-play-state: paused;
+  filter: brightness(1.1);
+}
+
+/* Login / Sign Up — subtle lift on hover */
+.btn-lift {
+  transition: transform 0.25s ease, box-shadow 0.25s ease, background-color 0.25s ease, filter 0.25s ease;
+}
+
+.btn-lift:hover {
+  transform: translateY(-2px);
+}
+
+.btn-lift:active {
+  transform: translateY(0px) scale(0.97);
+}
+
+/* Nav links — animated underline sweep on hover */
+.nav-link {
+  position: relative;
+  transition: color 0.3s ease;
+}
+
+.nav-link::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -12px;
+  width: 100%;
+  height: 2px;
+  background: #38bdf8;
+  border-radius: 999px;
+  transform: scaleX(0);
+  transform-origin: center;
+  transition: transform 0.3s ease;
+}
+
+.nav-link:hover::after {
+  transform: scaleX(1);
+}
+
+/* Premium shine sweep — light glides across button on hover */
+.shine {
+  position: relative;
+  overflow: hidden;
+}
+
+.shine::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -75%;
+  width: 50%;
+  height: 100%;
+  background: linear-gradient(
+    120deg,
+    transparent 0%,
+    rgba(255, 255, 255, 0.35) 50%,
+    transparent 100%
+  );
+  transform: skewX(-20deg);
+  transition: left 0.65s ease;
+}
+
+.shine:hover::before {
+  left: 130%;
+}
+
+/* Navbar top accent — slow-moving gradient hairline */
+@keyframes accentFlow {
+  0% { background-position: 0% 50%; }
+  100% { background-position: 200% 50%; }
+}
+
+.navbar-accent {
+  height: 2px;
+  width: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent, #38bdf8, #6366f1, #38bdf8, transparent
+  );
+  background-size: 200% 100%;
+  animation: accentFlow 6s linear infinite;
+  opacity: 0.55;
+}
+
+/* Active nav underline — animated gradient instead of flat color */
+@keyframes underlineFlow {
+  0% { background-position: 0% 50%; }
+  100% { background-position: 200% 50%; }
+}
+
+.underline-active {
+  background: linear-gradient(90deg, #38bdf8, #818cf8, #38bdf8);
+  background-size: 200% 100%;
+  animation: underlineFlow 3s linear infinite;
+}
+
+/* Hero entrance animations */
+@keyframes fadeInUp {
+  0% {
+    opacity: 0;
+    transform: translateY(24px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.hero-fade-1 {
+  animation: fadeInUp 0.7s ease-out forwards;
+  opacity: 0;
+}
+
+.hero-fade-2 {
+  animation: fadeInUp 0.7s ease-out 0.15s forwards;
+  opacity: 0;
+}
+
+.hero-fade-3 {
+  animation: fadeInUp 0.7s ease-out 0.3s forwards;
+  opacity: 0;
+}
+
+/* Location button — subtle pulse to draw attention */
+@keyframes locationPulse {
+  0%, 100% {
+    box-shadow: 0 0 0 0 rgba(56, 189, 248, 0.35);
+  }
+  50% {
+    box-shadow: 0 0 0 6px rgba(56, 189, 248, 0);
+  }
+}
+
+.location-pulse {
+  animation: locationPulse 2.5s ease-in-out infinite;
+}
+
+/* Tagline dot — small blinking indicator before "AI Powered" */
+@keyframes dotBlink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.3; }
+}
+
+.tagline-dot {
+  animation: dotBlink 1.6s ease-in-out infinite;
+}
+
+/* ===== WeatherCard Premium Animations ===== */
+
+/* Weather icon floating */
+@keyframes iconFloat {
+  0%, 100% { transform: translateY(0) rotate(0deg); }
+  50% { transform: translateY(-8px) rotate(-3deg); }
+}
+.icon-float {
+  animation: iconFloat 4s ease-in-out infinite;
+}
+
+/* Temperature number count-in feel (subtle scale pop) */
+@keyframes tempPop {
+  0% { opacity: 0; transform: scale(0.85); }
+  100% { opacity: 1; transform: scale(1); }
+}
+.temp-pop {
+  animation: tempPop 0.6s cubic-bezier(0.34,1.56,0.64,1) 0.2s both;
+}
+
+/* Live badge pulse dot */
+.live-dot {
+  animation: dotBlink 1.6s ease-in-out infinite;
+}
+
+/* ===== WeatherCard Stats Row Entrance ===== */
+@keyframes statRowIn {
+  0% {
+    opacity: 0;
+    transform: translateX(18px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.stat-row-in {
+  opacity: 0;
+  animation: statRowIn 0.55s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+/* ===== AirQuality Premium ===== */
+
+@keyframes aqiFadeIn {
+  0% { opacity: 0; transform: translateY(16px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+.aqi-fade-in {
+  animation: aqiFadeIn 0.6s ease-out both;
+}
+
+@keyframes aqiRowIn {
+  0% { opacity: 0; transform: translateX(10px); }
+  100% { opacity: 1; transform: translateX(0); }
+}
+.aqi-row {
+  animation: aqiRowIn 0.5s ease-out both;
+}
+
+@keyframes aqiBarFill {
+  0% { width: 0%; }
+  100% { width: var(--fill-width); }
+}
+.aqi-bar-fill {
+  background: linear-gradient(90deg, #34d399, #22c55e);
+  animation: aqiBarFill 1s ease-out 0.3s both;
+}
+
+/* ===== Chat Box Entrance Animation ===== */
+@keyframes chatBoxIn {
+  0% {
+    opacity: 0;
+    transform: translateY(120px) scale(0.96);
+    filter: blur(4px);
+  }
+  50% {
+    opacity: 1;
+    filter: blur(0px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+    filter: blur(0px);
+  }
+}
+
+.chat-box-in {
+  animation: chatBoxIn 2.2s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+/* ===== Animated Weather Background Effects ===== */
+/* Add this block to the END of src/styles/animation.css (don't remove existing content) */
+
+/* --- Sunny: soft pulsing sun rays --- */
+@keyframes sunPulse {
+  0%, 100% { opacity: 0.35; transform: scale(1); }
+  50% { opacity: 0.55; transform: scale(1.08); }
+}
+.weather-sun-glow {
+  position: absolute;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(255,220,120,0.55) 0%, rgba(255,180,60,0.15) 55%, transparent 75%);
+  animation: sunPulse 5s ease-in-out infinite;
+  filter: blur(2px);
+}
+
+/* --- Cloudy: drifting cloud shapes, parallax speeds --- */
+@keyframes cloudDrift {
+  0%   { transform: translateX(-15%); }
+  100% { transform: translateX(115%); }
+}
+.weather-cloud {
+  position: absolute;
+  background: rgba(255,255,255,0.18);
+  border-radius: 50%;
+  filter: blur(6px);
+  animation-name: cloudDrift;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+}
+
+/* --- Cloudy: real SVG cloud shapes drifting across the sky --- */
+@keyframes cloudShapeDrift {
+  0%   { transform: translateX(-25%); }
+  100% { transform: translateX(125%); }
+}
+.weather-cloud-shape {
+  position: absolute;
+  left: 0;
+  animation-name: cloudShapeDrift;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+}
+
+/* --- Rain: falling streaks --- */
+@keyframes rainFall {
+  0%   { transform: translateY(-10%); opacity: 0; }
+  10%  { opacity: 0.7; }
+  100% { transform: translateY(110vh); opacity: 0.2; }
+}
+.weather-raindrop {
+  position: absolute;
+  top: 0;
+  width: 2px;
+  background: linear-gradient(to bottom, transparent, rgba(180,210,255,0.6));
+  animation-name: rainFall;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+}
+
+/* ===========================
+   THUNDERSTORM
+=========================== */
+
+@keyframes lightningFlash{
+
+    0%,92%,100%{
+        opacity:0;
+    }
+
+    93%{
+        opacity:.55;
+    }
+
+    94%{
+        opacity:.05;
+    }
+
+    95%{
+        opacity:.40;
+    }
+
+    96%{
+        opacity:0;
+    }
+
+}
+
+.weather-lightning{
+
+    position:absolute;
+    inset:0;
+
+    background:
+        rgba(220,225,255,.9);
+
+    animation:
+        lightningFlash 7s ease-in-out infinite;
+
+    pointer-events:none;
+
+}
+
+/* =========================
+   FOG
+========================= */
+
+.weather-fog-layer{
+    position:absolute;
+    left:-30%;
+    border-radius:50%;
+
+    background:
+      radial-gradient(
+        ellipse at center,
+        rgba(255,255,255,.55) 0%,
+        rgba(255,255,255,.3) 40%,
+        rgba(255,255,255,.12) 70%,
+        transparent 100%
+      );
+
+    filter: blur(60px);
+
+    animation: fogDrift linear infinite;
+
+    pointer-events:none;
+}
+
+@keyframes fogDrift{
+    0%{ transform: translateX(-15%) translateY(0px); }
+    25%{ transform: translateX(-8%) translateY(-10px); }
+    50%{ transform: translateX(3%) translateY(8px); }
+    75%{ transform: translateX(10%) translateY(-8px); }
+    100%{ transform: translateX(18%) translateY(0px); }
+}
+
+/* ==============================
+   Premium Wind Turbines
+================================*/
+
+.wind-turbine{
+    position:absolute;
+    width:18px;
+    height:520px;
+    z-index:2;
+    animation:turbineSway 8s ease-in-out infinite;
+    transform-origin:bottom center;
+}
+
+.tower{
+    position:absolute;
+    bottom:0;
+    left:50%;
+    transform:translateX(-50%);
+
+    width:14px;
+    height:430px;
+
+    border-radius:30px;
+
+    background:
+    linear-gradient(
+        to right,
+        #cfd7e4,
+        #ffffff,
+        #d6dce6
+    );
+
+    box-shadow:
+        0 0 18px rgba(255,255,255,.15);
+}
+
+.hub{
+
+    position:absolute;
+
+    top:75px;
+    left:50%;
+
+    width:20px;
+    height:20px;
+
+    transform:translate(-50%,-50%);
+
+    border-radius:50%;
+
+    background:white;
+
+    box-shadow:
+    0 0 18px rgba(255,255,255,.3);
+
+    animation:
+    rotateBlade 5s linear infinite;
+}
+
+.blade{
+
+    position:absolute;
+
+    left:50%;
+    top:50%;
+
+    width:110px;
+    height:5px;
+
+    border-radius:50px;
+
+    transform-origin:left center;
+
+    background:
+    linear-gradient(
+        to right,
+        white,
+        #dfe6ef
+    );
+
+    box-shadow:
+    0 0 12px rgba(255,255,255,.2);
+}
+
+.blade1{
+    transform:rotate(0deg);
+}
+
+.blade2{
+    transform:rotate(120deg);
+}
+
+.blade3{
+    transform:rotate(240deg);
+}
+
+@keyframes rotateBlade{
+
+    from{
+        transform:
+        translate(-50%,-50%)
+        rotate(0deg);
+    }
+
+    to{
+        transform:
+        translate(-50%,-50%)
+        rotate(360deg);
+    }
+
+}
+
+@keyframes turbineSway{
+
+    0%{
+        transform:rotate(0deg);
+    }
+
+    25%{
+        transform:rotate(.4deg);
+    }
+
+    50%{
+        transform:rotate(-.3deg);
+    }
+
+    75%{
+        transform:rotate(.5deg);
+    }
+
+    100%{
+        transform:rotate(0deg);
+    }
+
+}
+
+/* --- Snow: gently falling flakes with sideways drift --- */
+@keyframes snowFall {
+  0%   { transform: translate(0, -10%) rotate(0deg); opacity: 0; }
+  10%  { opacity: 0.9; }
+  100% { transform: translate(30px, 110vh) rotate(120deg); opacity: 0.6; }
+}
+.weather-snowflake {
+  position: absolute;
+  top: 0;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.85);
+  animation-name: snowFall;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+}
+
+@keyframes fogDrift{
+
+    0%{
+        transform:
+        translateX(-15%)
+        translateY(0px);
+    }
+
+    25%{
+        transform:
+        translateX(-8%)
+        translateY(-10px);
+    }
+
+    50%{
+        transform:
+        translateX(3%)
+        translateY(8px);
+    }
+
+    75%{
+        transform:
+        translateX(10%)
+        translateY(-8px);
+    }
+
+    100%{
+        transform:
+        translateX(18%)
+        translateY(0px);
+    }
+
+}
+
+/* ==============================
+   Premium Wind Turbines
+================================*/
+
+.wind-turbine{
+    position:absolute;
+    width:18px;
+    height:520px;
+    z-index:2;
+    animation:turbineSway 8s ease-in-out infinite;
+    transform-origin:bottom center;
+}
+
+.tower{
+    position:absolute;
+    bottom:0;
+    left:50%;
+    transform:translateX(-50%);
+
+    width:14px;
+    height:430px;
+
+    border-radius:30px;
+
+    background:
+    linear-gradient(
+        to right,
+        #cfd7e4,
+        #ffffff,
+        #d6dce6
+    );
+
+    box-shadow:
+        0 0 18px rgba(255,255,255,.15);
+}
+
+.hub{
+
+    position:absolute;
+
+    top:75px;
+    left:50%;
+
+    width:20px;
+    height:20px;
+
+    transform:translate(-50%,-50%);
+
+    border-radius:50%;
+
+    background:white;
+
+    box-shadow:
+    0 0 18px rgba(255,255,255,.3);
+
+    animation:
+    rotateBlade 5s linear infinite;
+}
+
+.blade{
+
+    position:absolute;
+
+    left:50%;
+    top:50%;
+
+    width:110px;
+    height:5px;
+
+    border-radius:50px;
+
+    transform-origin:left center;
+
+    background:
+    linear-gradient(
+        to right,
+        white,
+        #dfe6ef
+    );
+
+    box-shadow:
+    0 0 12px rgba(255,255,255,.2);
+}
+
+.blade1{
+    transform:rotate(0deg);
+}
+
+.blade2{
+    transform:rotate(120deg);
+}
+
+.blade3{
+    transform:rotate(240deg);
+}
+
+@keyframes rotateBlade{
+
+    from{
+        transform:
+        translate(-50%,-50%)
+        rotate(0deg);
+    }
+
+    to{
+        transform:
+        translate(-50%,-50%)
+        rotate(360deg);
+    }
+
+}
+
+@keyframes turbineSway{
+
+    0%{
+        transform:rotate(0deg);
+    }
+
+    25%{
+        transform:rotate(.4deg);
+    }
+
+    50%{
+        transform:rotate(-.3deg);
+    }
+
+    75%{
+        transform:rotate(.5deg);
+    }
+
+    100%{
+        transform:rotate(0deg);
+    }
+
+}
+
+/* --- Snow: gently falling flakes with sideways drift --- */
+@keyframes snowFall {
+  0%   { transform: translate(0, -10%) rotate(0deg); opacity: 0; }
+  10%  { opacity: 0.9; }
+  100% { transform: translate(30px, 110vh) rotate(120deg); opacity: 0.6; }
+}
+.weather-snowflake {
+  position: absolute;
+  top: 0;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.85);
+  animation-name: snowFall;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+}

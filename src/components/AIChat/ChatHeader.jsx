@@ -1,4 +1,4 @@
-import { MoreVertical, Sparkles } from "lucide-react";
+import { Sparkles } from "lucide-react";
 
 function ChatHeader() {
     return (
@@ -109,50 +109,6 @@ function ChatHeader() {
 
 
             </div>
-
-
-
-
-            {/* Right Section */}
-
-            <div
-                className="
-        flex
-        items-center
-        gap-3
-        shrink-0
-        "
-            >
-
-                {/* Menu Button */}
-
-                <button
-                    className="
-          flex
-          h-8
-          w-8
-          items-center
-          justify-center
-          rounded-xl
-          bg-white/[0.05]
-          border
-          border-white/10
-          text-gray-400
-          transition-all
-          duration-300
-          hover:bg-white/10
-          hover:text-white
-          hover:scale-105
-          "
-                >
-
-                    <MoreVertical size={17} />
-
-                </button>
-
-
-            </div>
-
 
         </div>
     );
