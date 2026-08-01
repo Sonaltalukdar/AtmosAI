@@ -30,7 +30,7 @@ function AuthModal({ isOpen, onClose, startInLogin, onLoginSuccess }) {
 
             if (isLogin) {
                 response = await axios.post(
-                    "http://localhost:5000/api/auth/login",
+                    "https://atmosai-backend.onrender.com/api/auth/login",
                     {
                         email,
                         password,
@@ -38,7 +38,7 @@ function AuthModal({ isOpen, onClose, startInLogin, onLoginSuccess }) {
                 );
             } else {
                 response = await axios.post(
-                    "http://localhost:5000/api/auth/signup",
+                    "https://atmosai-backend.onrender.com/api/auth/signup",
                     {
                         name,
                         email,
@@ -55,15 +55,20 @@ function AuthModal({ isOpen, onClose, startInLogin, onLoginSuccess }) {
             onLoginSuccess(user);
             onClose();
         } catch (err) {
+            console.error("Auth Error:", err);
+            console.error("Status:", err.response?.status);
+            console.error("Response:", err.response?.data);
+
             setError(
+                err.response?.data?.error ||
                 err.response?.data?.message ||
+                err.message ||
                 "Something went wrong"
             );
         } finally {
             setLoading(false);
         }
-    };
-
+    }
     return (
         <div
             className="

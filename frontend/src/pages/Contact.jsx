@@ -29,7 +29,7 @@ function Contact() {
 
         try {
             const res = await fetch(
-                "http://localhost:5000/api/contact",
+                "https://atmosai-backend.onrender.com/api/contact",
                 {
                     method: "POST",
                     headers: {
