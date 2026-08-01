@@ -268,6 +268,15 @@ function WeatherBackground({ condition, children }) {
                 duration-700
                 ${theme.bg}
             `}
+            style={
+                theme.bgImage
+                    ? {
+                          backgroundImage: `url(${theme.bgImage})`,
+                          backgroundSize: "cover",
+                          backgroundPosition: "center",
+                      }
+                    : undefined
+            }
         >
             {/* Animated weather layer (clouds/rain/snow/etc.), clipped to viewport */}
             <div className="absolute inset-0 overflow-hidden pointer-events-none">
@@ -275,7 +284,7 @@ function WeatherBackground({ condition, children }) {
             </div>
 
             {/* subtle dark overlay so all existing text/cards stay readable */}
-            <div className="absolute inset-0 bg-black/40 pointer-events-none" />
+            <div className="absolute inset-0 bg-black/22 pointer-events-none" />
 
             <div className="relative z-10">
                 {children}

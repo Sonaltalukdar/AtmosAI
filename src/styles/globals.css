@@ -23,3 +23,21 @@ body {
   min-height: 100vh;
   background-color: #02040a;
 }
+
+/* Browsers force their own light/white background on autofilled inputs,
+   ignoring bg-transparent — this trick uses a huge inset box-shadow of
+   our dark color to visually "paint over" that forced background, and
+   -webkit-text-fill-color so the typed text stays white instead of
+   defaulting to black. Applies to any input on the site (search bar,
+   auth modal fields, etc.) so all of them stay consistent with the
+   dark glass theme even when autofilled. */
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active {
+  -webkit-text-fill-color: #fff;
+  -webkit-box-shadow: 0 0 0px 1000px rgba(15, 18, 28, 0.95) inset;
+  box-shadow: 0 0 0px 1000px rgba(15, 18, 28, 0.95) inset;
+  caret-color: #fff;
+  transition: background-color 9999s ease-in-out 0s;
+}

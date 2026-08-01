@@ -1,5 +1,3 @@
-// src/data/Location.js
-
 // Fixed demo dataset for 7 locations.
 // Used by WeatherCard, WeatherBackground and AirQuality.
 

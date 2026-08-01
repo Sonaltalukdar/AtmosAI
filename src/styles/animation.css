@@ -235,7 +235,7 @@
   100% { width: var(--fill-width); }
 }
 .aqi-bar-fill {
-  background: linear-gradient(90deg, #34d399, #22c55e);
+  background: linear-gradient(90deg, #34d399, #10b981, #06b6d4);
   animation: aqiBarFill 1s ease-out 0.3s both;
 }
 
@@ -262,377 +262,6 @@
 }
 
 /* ===== Animated Weather Background Effects ===== */
-/* Add this block to the END of src/styles/animation.css (don't remove existing content) */
-
-/* --- Sunny: soft pulsing sun rays --- */
-@keyframes sunPulse {
-  0%, 100% { opacity: 0.35; transform: scale(1); }
-  50% { opacity: 0.55; transform: scale(1.08); }
-}
-.weather-sun-glow {
-  position: absolute;
-  border-radius: 50%;
-  background: radial-gradient(circle, rgba(255,220,120,0.55) 0%, rgba(255,180,60,0.15) 55%, transparent 75%);
-  animation: sunPulse 5s ease-in-out infinite;
-  filter: blur(2px);
-}
-
-/* --- Cloudy: drifting cloud shapes, parallax speeds --- */
-@keyframes cloudDrift {
-  0%   { transform: translateX(-15%); }
-  100% { transform: translateX(115%); }
-}
-.weather-cloud {
-  position: absolute;
-  background: rgba(255,255,255,0.18);
-  border-radius: 50%;
-  filter: blur(6px);
-  animation-name: cloudDrift;
-  animation-timing-function: linear;
-  animation-iteration-count: infinite;
-}
-
-/* --- Cloudy: real SVG cloud shapes drifting across the sky --- */
-@keyframes cloudShapeDrift {
-  0%   { transform: translateX(-25%); }
-  100% { transform: translateX(125%); }
-}
-.weather-cloud-shape {
-  position: absolute;
-  left: 0;
-  animation-name: cloudShapeDrift;
-  animation-timing-function: linear;
-  animation-iteration-count: infinite;
-}
-
-/* --- Rain: falling streaks --- */
-@keyframes rainFall {
-  0%   { transform: translateY(-10%); opacity: 0; }
-  10%  { opacity: 0.7; }
-  100% { transform: translateY(110vh); opacity: 0.2; }
-}
-.weather-raindrop {
-  position: absolute;
-  top: 0;
-  width: 2px;
-  background: linear-gradient(to bottom, transparent, rgba(180,210,255,0.6));
-  animation-name: rainFall;
-  animation-timing-function: linear;
-  animation-iteration-count: infinite;
-}
-
-/* ===========================
-   THUNDERSTORM
-=========================== */
-
-@keyframes lightningFlash{
-
-    0%,92%,100%{
-        opacity:0;
-    }
-
-    93%{
-        opacity:.55;
-    }
-
-    94%{
-        opacity:.05;
-    }
-
-    95%{
-        opacity:.40;
-    }
-
-    96%{
-        opacity:0;
-    }
-
-}
-
-.weather-lightning{
-
-    position:absolute;
-    inset:0;
-
-    background:
-        rgba(220,225,255,.9);
-
-    animation:
-        lightningFlash 7s ease-in-out infinite;
-
-    pointer-events:none;
-
-}
-
-/* =========================
-   FOG
-========================= */
-
-/* Sign Up button — animated gradient flow + glow */
-@keyframes gradientFlow {
-  0% { background-position: 0% 50%; }
-  50% { background-position: 100% 50%; }
-  100% { background-position: 0% 50%; }
-}
-
-@keyframes signupPulse {
-  0%, 100% {
-    box-shadow: 0 8px 25px rgba(14, 165, 233, 0.4);
-  }
-  50% {
-    box-shadow: 0 8px 32px rgba(14, 165, 233, 0.7);
-  }
-}
-
-.signup-glow {
-  background: linear-gradient(120deg, #0ea5e9, #38bdf8, #0284c7, #0ea5e9);
-  background-size: 300% 300%;
-  animation: signupPulse 2.8s ease-in-out infinite, gradientFlow 6s ease infinite;
-}
-
-.signup-glow:hover {
-  animation-play-state: paused;
-  filter: brightness(1.1);
-}
-
-/* Login / Sign Up — subtle lift on hover */
-.btn-lift {
-  transition: transform 0.25s ease, box-shadow 0.25s ease, background-color 0.25s ease, filter 0.25s ease;
-}
-
-.btn-lift:hover {
-  transform: translateY(-2px);
-}
-
-.btn-lift:active {
-  transform: translateY(0px) scale(0.97);
-}
-
-/* Nav links — animated underline sweep on hover */
-.nav-link {
-  position: relative;
-  transition: color 0.3s ease;
-}
-
-.nav-link::after {
-  content: "";
-  position: absolute;
-  left: 0;
-  bottom: -12px;
-  width: 100%;
-  height: 2px;
-  background: #38bdf8;
-  border-radius: 999px;
-  transform: scaleX(0);
-  transform-origin: center;
-  transition: transform 0.3s ease;
-}
-
-.nav-link:hover::after {
-  transform: scaleX(1);
-}
-
-/* Premium shine sweep — light glides across button on hover */
-.shine {
-  position: relative;
-  overflow: hidden;
-}
-
-.shine::before {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: -75%;
-  width: 50%;
-  height: 100%;
-  background: linear-gradient(
-    120deg,
-    transparent 0%,
-    rgba(255, 255, 255, 0.35) 50%,
-    transparent 100%
-  );
-  transform: skewX(-20deg);
-  transition: left 0.65s ease;
-}
-
-.shine:hover::before {
-  left: 130%;
-}
-
-/* Navbar top accent — slow-moving gradient hairline */
-@keyframes accentFlow {
-  0% { background-position: 0% 50%; }
-  100% { background-position: 200% 50%; }
-}
-
-.navbar-accent {
-  height: 2px;
-  width: 100%;
-  background: linear-gradient(
-    90deg,
-    transparent, #38bdf8, #6366f1, #38bdf8, transparent
-  );
-  background-size: 200% 100%;
-  animation: accentFlow 6s linear infinite;
-  opacity: 0.55;
-}
-
-/* Active nav underline — animated gradient instead of flat color */
-@keyframes underlineFlow {
-  0% { background-position: 0% 50%; }
-  100% { background-position: 200% 50%; }
-}
-
-.underline-active {
-  background: linear-gradient(90deg, #38bdf8, #818cf8, #38bdf8);
-  background-size: 200% 100%;
-  animation: underlineFlow 3s linear infinite;
-}
-
-/* Hero entrance animations */
-@keyframes fadeInUp {
-  0% {
-    opacity: 0;
-    transform: translateY(24px);
-  }
-  100% {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-.hero-fade-1 {
-  animation: fadeInUp 0.7s ease-out forwards;
-  opacity: 0;
-}
-
-.hero-fade-2 {
-  animation: fadeInUp 0.7s ease-out 0.15s forwards;
-  opacity: 0;
-}
-
-.hero-fade-3 {
-  animation: fadeInUp 0.7s ease-out 0.3s forwards;
-  opacity: 0;
-}
-
-/* Location button — subtle pulse to draw attention */
-@keyframes locationPulse {
-  0%, 100% {
-    box-shadow: 0 0 0 0 rgba(56, 189, 248, 0.35);
-  }
-  50% {
-    box-shadow: 0 0 0 6px rgba(56, 189, 248, 0);
-  }
-}
-
-.location-pulse {
-  animation: locationPulse 2.5s ease-in-out infinite;
-}
-
-/* Tagline dot — small blinking indicator before "AI Powered" */
-@keyframes dotBlink {
-  0%, 100% { opacity: 1; }
-  50% { opacity: 0.3; }
-}
-
-.tagline-dot {
-  animation: dotBlink 1.6s ease-in-out infinite;
-}
-
-/* ===== WeatherCard Premium Animations ===== */
-
-/* Weather icon floating */
-@keyframes iconFloat {
-  0%, 100% { transform: translateY(0) rotate(0deg); }
-  50% { transform: translateY(-8px) rotate(-3deg); }
-}
-.icon-float {
-  animation: iconFloat 4s ease-in-out infinite;
-}
-
-/* Temperature number count-in feel (subtle scale pop) */
-@keyframes tempPop {
-  0% { opacity: 0; transform: scale(0.85); }
-  100% { opacity: 1; transform: scale(1); }
-}
-.temp-pop {
-  animation: tempPop 0.6s cubic-bezier(0.34,1.56,0.64,1) 0.2s both;
-}
-
-/* Live badge pulse dot */
-.live-dot {
-  animation: dotBlink 1.6s ease-in-out infinite;
-}
-
-/* ===== WeatherCard Stats Row Entrance ===== */
-@keyframes statRowIn {
-  0% {
-    opacity: 0;
-    transform: translateX(18px);
-  }
-  100% {
-    opacity: 1;
-    transform: translateX(0);
-  }
-}
-
-.stat-row-in {
-  opacity: 0;
-  animation: statRowIn 0.55s cubic-bezier(0.22, 1, 0.36, 1) both;
-}
-
-/* ===== AirQuality Premium ===== */
-
-@keyframes aqiFadeIn {
-  0% { opacity: 0; transform: translateY(16px); }
-  100% { opacity: 1; transform: translateY(0); }
-}
-.aqi-fade-in {
-  animation: aqiFadeIn 0.6s ease-out both;
-}
-
-@keyframes aqiRowIn {
-  0% { opacity: 0; transform: translateX(10px); }
-  100% { opacity: 1; transform: translateX(0); }
-}
-.aqi-row {
-  animation: aqiRowIn 0.5s ease-out both;
-}
-
-@keyframes aqiBarFill {
-  0% { width: 0%; }
-  100% { width: var(--fill-width); }
-}
-.aqi-bar-fill {
-  background: linear-gradient(90deg, #34d399, #22c55e);
-  animation: aqiBarFill 1s ease-out 0.3s both;
-}
-
-/* ===== Chat Box Entrance Animation ===== */
-@keyframes chatBoxIn {
-  0% {
-    opacity: 0;
-    transform: translateY(120px) scale(0.96);
-    filter: blur(4px);
-  }
-  50% {
-    opacity: 1;
-    filter: blur(0px);
-  }
-  100% {
-    opacity: 1;
-    transform: translateY(0) scale(1);
-    filter: blur(0px);
-  }
-}
-
-.chat-box-in {
-  animation: chatBoxIn 2.2s cubic-bezier(0.22, 1, 0.36, 1) both;
-}
-
-/* ===== Animated Weather Background Effects ===== */
-/* Add this block to the END of src/styles/animation.css (don't remove existing content) */
 
 /* --- Sunny: soft pulsing sun rays --- */
 @keyframes sunPulse {
@@ -919,188 +548,486 @@
   animation-iteration-count: infinite;
 }
 
-@keyframes fogDrift{
+/* ===== Premium Dashboard Card (Hourly / Weekly / AQI / WeatherCard containers) ===== */
 
-    0%{
-        transform:
-        translateX(-15%)
-        translateY(0px);
-    }
-
-    25%{
-        transform:
-        translateX(-8%)
-        translateY(-10px);
-    }
-
-    50%{
-        transform:
-        translateX(3%)
-        translateY(8px);
-    }
-
-    75%{
-        transform:
-        translateX(10%)
-        translateY(-8px);
-    }
-
-    100%{
-        transform:
-        translateX(18%)
-        translateY(0px);
-    }
-
+@keyframes cardEnter {
+  0% {
+    opacity: 0;
+    transform: translateY(24px) scale(0.98);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
 }
 
-/* ==============================
-   Premium Wind Turbines
-================================*/
-
-.wind-turbine{
-    position:absolute;
-    width:18px;
-    height:520px;
-    z-index:2;
-    animation:turbineSway 8s ease-in-out infinite;
-    transform-origin:bottom center;
+.card-premium {
+  position: relative;
+  animation: cardEnter 0.65s cubic-bezier(0.22, 1, 0.36, 1) both;
+  transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1),
+              box-shadow 0.35s ease,
+              border-color 0.35s ease;
+  will-change: transform;
 }
 
-.tower{
-    position:absolute;
-    bottom:0;
-    left:50%;
-    transform:translateX(-50%);
-
-    width:14px;
-    height:430px;
-
-    border-radius:30px;
-
-    background:
-    linear-gradient(
-        to right,
-        #cfd7e4,
-        #ffffff,
-        #d6dce6
-    );
-
-    box-shadow:
-        0 0 18px rgba(255,255,255,.15);
+.card-premium:hover {
+  transform: translateY(-6px);
+  border-color: rgba(255, 255, 255, 0.14);
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.45),
+              0 0 0 1px rgba(255, 255, 255, 0.04) inset;
 }
 
-.hub{
-
-    position:absolute;
-
-    top:75px;
-    left:50%;
-
-    width:20px;
-    height:20px;
-
-    transform:translate(-50%,-50%);
-
-    border-radius:50%;
-
-    background:white;
-
-    box-shadow:
-    0 0 18px rgba(255,255,255,.3);
-
-    animation:
-    rotateBlade 5s linear infinite;
+/* Subtle animated gradient sheen sweeping across the card border on hover */
+.card-premium::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  padding: 1px;
+  background: linear-gradient(
+    120deg,
+    transparent 20%,
+    rgba(96, 165, 250, 0.35) 50%,
+    transparent 80%
+  );
+  background-size: 250% 250%;
+  background-position: 0% 50%;
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  opacity: 0;
+  transition: opacity 0.4s ease, background-position 1.2s ease;
+  pointer-events: none;
 }
 
-.blade{
-
-    position:absolute;
-
-    left:50%;
-    top:50%;
-
-    width:110px;
-    height:5px;
-
-    border-radius:50px;
-
-    transform-origin:left center;
-
-    background:
-    linear-gradient(
-        to right,
-        white,
-        #dfe6ef
-    );
-
-    box-shadow:
-    0 0 12px rgba(255,255,255,.2);
+.card-premium:hover::before {
+  opacity: 1;
+  background-position: 100% 50%;
 }
 
-.blade1{
-    transform:rotate(0deg);
+/* ===== Small item cards inside Hourly / 7-Day forecast ===== */
+
+.mini-card {
+  transition: transform 0.25s cubic-bezier(0.22, 1, 0.36, 1),
+              background-color 0.25s ease,
+              box-shadow 0.25s ease;
 }
 
-.blade2{
-    transform:rotate(120deg);
+.mini-card:hover {
+  transform: translateY(-4px) scale(1.03);
+  background-color: rgba(255, 255, 255, 0.06);
+  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.35);
 }
 
-.blade3{
-    transform:rotate(240deg);
+/* Gentle shimmer sweep used once on card mount to feel "premium" */
+@keyframes shimmerSweep {
+  0% { transform: translateX(-120%); }
+  100% { transform: translateX(120%); }
 }
 
-@keyframes rotateBlade{
-
-    from{
-        transform:
-        translate(-50%,-50%)
-        rotate(0deg);
-    }
-
-    to{
-        transform:
-        translate(-50%,-50%)
-        rotate(360deg);
-    }
-
+.shimmer-sweep {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+  border-radius: inherit;
 }
 
-@keyframes turbineSway{
-
-    0%{
-        transform:rotate(0deg);
-    }
-
-    25%{
-        transform:rotate(.4deg);
-    }
-
-    50%{
-        transform:rotate(-.3deg);
-    }
-
-    75%{
-        transform:rotate(.5deg);
-    }
-
-    100%{
-        transform:rotate(0deg);
-    }
-
-}
-
-/* --- Snow: gently falling flakes with sideways drift --- */
-@keyframes snowFall {
-  0%   { transform: translate(0, -10%) rotate(0deg); opacity: 0; }
-  10%  { opacity: 0.9; }
-  100% { transform: translate(30px, 110vh) rotate(120deg); opacity: 0.6; }
-}
-.weather-snowflake {
+.shimmer-sweep::after {
+  content: "";
   position: absolute;
   top: 0;
-  border-radius: 50%;
-  background: rgba(255,255,255,0.85);
-  animation-name: snowFall;
-  animation-timing-function: linear;
-  animation-iteration-count: infinite;
+  left: 0;
+  width: 40%;
+  height: 100%;
+  background: linear-gradient(
+    100deg,
+    transparent,
+    rgba(255, 255, 255, 0.06),
+    transparent
+  );
+  animation: shimmerSweep 2.2s ease-in-out 0.4s 1;
+}
+
+/* Stagger delay helper for card-premium when used in a grid */
+.card-premium.delay-1 { animation-delay: 0.08s; }
+.card-premium.delay-2 { animation-delay: 0.16s; }
+.card-premium.delay-3 { animation-delay: 0.24s; }
+
+/* ===== Realistic Sky Backgrounds ===== */
+
+.sky-sunny {
+  background:
+    radial-gradient(ellipse 75% 45% at 68% 18%, rgba(255,240,190,0.85), rgba(255,220,150,0.25) 45%, transparent 68%),
+    linear-gradient(to bottom, #1f7fce 0%, #3f9fdd 22%, #7cc4ea 42%, #d9e8c9 62%, #ffcf8a 80%, #ff9a56 100%);
+}
+
+.sky-cloudy {
+  background:
+    radial-gradient(ellipse 100% 55% at 50% 0%, rgba(255,255,255,0.16), transparent 62%),
+    linear-gradient(to bottom, #1f2c40 0%, #33445e 28%, #4c5f79 55%, #6b7c93 78%, #8593a6 100%);
+}
+
+.sky-rain {
+  background:
+    radial-gradient(ellipse 85% 40% at 50% 100%, rgba(110,140,180,0.28), transparent 70%),
+    linear-gradient(to bottom, #070f1c 0%, #101f34 25%, #1b3050 50%, #24425f 75%, #2b5170 100%);
+}
+
+.sky-thunderstorm {
+  background:
+    radial-gradient(ellipse 65% 35% at 50% 95%, rgba(130,100,190,0.22), transparent 72%),
+    linear-gradient(to bottom, #030408 0%, #0a0a14 25%, #14101f 50%, #1e1730 75%, #251b3c 100%);
+}
+
+.sky-fog {
+  background:
+    radial-gradient(ellipse 100% 65% at 50% 35%, rgba(255,255,255,0.22), transparent 70%),
+    linear-gradient(to bottom, #5c6570 0%, #737c85 30%, #8c949c 55%, #a2a9b0 78%, #b7bdc3 100%);
+}
+
+.sky-windy {
+  background:
+    radial-gradient(ellipse 85% 45% at 28% 22%, rgba(190,240,235,0.22), transparent 65%),
+    linear-gradient(to bottom, #0a4750 0%, #106470 25%, #187e8b 50%, #229aa5 75%, #33b6bf 100%);
+}
+
+.sky-snow {
+  background:
+    radial-gradient(ellipse 90% 45% at 50% 12%, rgba(255,255,255,0.3), transparent 62%),
+    linear-gradient(to bottom, #2e3c5c 0%, #445d84 28%, #6482ab 55%, #93a9c8 78%, #c3d0e2 100%);
+}
+
+/* ===== Premium Glassmorphism Dashboard Cards ===== */
+
+.glass-card {
+  position: relative;
+  background: linear-gradient(
+    160deg,
+    rgba(255, 255, 255, 0.07) 0%,
+    rgba(255, 255, 255, 0.02) 40%,
+    rgba(255, 255, 255, 0.015) 100%
+  );
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border: 1px solid rgba(255, 255, 255, 0.09);
+  isolation: isolate;
+}
+
+/* Thin bright line along the top edge, like light catching glass */
+.glass-card::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 6%;
+  right: 6%;
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.35),
+    transparent
+  );
+  pointer-events: none;
+}
+
+/* Colored ambient glow blobs sitting behind/inside glass cards for depth */
+.glow-blob {
+  position: absolute;
+  border-radius: 9999px;
+  filter: blur(65px) saturate(1.15);
+  pointer-events: none;
+  z-index: -1;
+  opacity: 0.6;
+}
+
+.glow-blob-blue {
+  background: radial-gradient(circle, rgba(37, 99, 235, 0.65), transparent 70%);
+}
+
+.glow-blob-purple {
+  background: radial-gradient(circle, rgba(147, 51, 234, 0.6), transparent 70%);
+}
+
+.glow-blob-green {
+  background: radial-gradient(circle, rgba(16, 185, 129, 0.6), transparent 70%);
+}
+
+/* Now/today highlight pill used in hourly + weekly forecast */
+.highlight-slot {
+  background: linear-gradient(135deg, rgba(59, 130, 246, 0.4), rgba(168, 85, 247, 0.32));
+  border: 1px solid rgba(96, 165, 250, 0.55);
+  box-shadow: 0 0 32px rgba(59, 130, 246, 0.4);
+}
+
+/* Icon badge circle, gives forecast icons a soft glass coin backdrop */
+.icon-badge {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 52px;
+  height: 52px;
+}
+
+/* Gradient text used for big numbers to feel more premium */
+.gradient-text-blue {
+  background: linear-gradient(135deg, #ffffff 0%, #60a5fa 55%, #a78bfa 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+/* ===== Galaxy / night-sky theme for the landing page ===== */
+
+/* Deep space background — near-black with a faint purple nebula glow
+   near the top, instead of a flat color. */
+.galaxy-bg {
+  position: relative;
+  background:
+    radial-gradient(ellipse 120% 55% at 50% -10%, rgba(88, 40, 160, 0.28), transparent 62%),
+    radial-gradient(ellipse 80% 50% at 85% 15%, rgba(30, 64, 175, 0.18), transparent 60%),
+    linear-gradient(180deg, #02030a 0%, #04050f 35%, #06081a 65%, #030308 100%);
+}
+
+/* Extra nebula layer that slowly drifts + breathes so the background
+   never sits perfectly still, without moving the stars/moon on top of it. */
+@keyframes nebulaDrift {
+  0%   { transform: translate(0%, 0%) scale(1);     opacity: 0.75; }
+  50%  { transform: translate(3%, -4%) scale(1.12);  opacity: 1; }
+  100% { transform: translate(0%, 0%) scale(1);      opacity: 0.75; }
+}
+
+.galaxy-bg::before {
+  content: "";
+  position: absolute;
+  inset: -15%;
+  z-index: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(circle at 28% 35%, rgba(139, 92, 246, 0.20), transparent 55%),
+    radial-gradient(circle at 72% 68%, rgba(56, 189, 248, 0.16), transparent 55%);
+  animation: nebulaDrift 16s ease-in-out infinite;
+}
+
+/* Soft drifting dust motes — bigger, blurrier, slower than the pinpoint
+   stars, floating gently upward for a sense of depth/parallax. */
+@keyframes dustFloat {
+  0%   { transform: translateY(0) scale(1);     opacity: 0; }
+  10%  { opacity: 0.5; }
+  50%  { transform: translateY(-40px) scale(1.15); opacity: 0.7; }
+  90%  { opacity: 0.15; }
+  100% { transform: translateY(-90px) scale(1);  opacity: 0; }
+}
+
+.galaxy-dust {
+  position: absolute;
+  border-radius: 9999px;
+  background: radial-gradient(circle, rgba(199, 210, 254, 0.9), transparent 70%);
+  filter: blur(1px);
+  animation: dustFloat ease-in-out infinite;
+}
+
+/* Small twinkling background stars scattered across the sky */
+@keyframes starTwinkle {
+  0%, 100% { opacity: 0.2; transform: scale(0.8); }
+  50%      { opacity: 1; transform: scale(1.2); }
+}
+
+.galaxy-star {
+  position: absolute;
+  border-radius: 9999px;
+  background: #ffffff;
+  animation: starTwinkle ease-in-out infinite;
+}
+
+/* A comet-style shooting star: a bright dot with a fading tail, sweeping
+   diagonally across the sky then invisible for the rest of its cycle
+   before it resets and streaks again. */
+@keyframes shootingStarMove {
+  0%   { transform: translate(0, 0) rotate(0deg); opacity: 0; }
+  2%   { opacity: 1; }
+  16%  { transform: translate(-380px, 260px) rotate(0deg); opacity: 0; }
+  100% { transform: translate(-380px, 260px) rotate(0deg); opacity: 0; }
+}
+
+.galaxy-shooting-star {
+  position: absolute;
+  width: 3px;
+  height: 3px;
+  border-radius: 9999px;
+  background: #ffffff;
+  box-shadow: 0 0 8px 2px rgba(255, 255, 255, 0.9);
+  transform-origin: left center;
+  animation: shootingStarMove linear infinite;
+}
+
+.galaxy-shooting-star::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  right: 0;
+  width: 110px;
+  height: 1.5px;
+  background: linear-gradient(90deg, rgba(255, 255, 255, 0.85), transparent);
+  transform: translateY(-50%) rotate(-30deg);
+  transform-origin: right center;
+}
+
+/* Glowing moon — outer wrapper handles the pulsing halo, inner circle
+   handles the surface shading/craters so the two don't fight each other. */
+@keyframes moonGlow {
+  0%, 100% { box-shadow: 0 0 45px 14px rgba(226, 232, 255, 0.28), 0 0 90px 34px rgba(167, 139, 250, 0.12); }
+  50%      { box-shadow: 0 0 65px 22px rgba(226, 232, 255, 0.42), 0 0 120px 46px rgba(167, 139, 250, 0.2); }
+}
+
+/* Slow gentle vertical bob, like the moon is drifting in the sky. */
+@keyframes moonFloat {
+  0%, 100% { transform: translateY(0); }
+  50%      { transform: translateY(-10px); }
+}
+
+.galaxy-moon-wrap {
+  position: absolute;
+  border-radius: 9999px;
+  animation:
+    moonGlow 6s ease-in-out infinite,
+    moonFloat 7s ease-in-out infinite;
+}
+
+/* Subtle "libration" wobble — real moons rock slightly rather than
+   spinning, so a small back-and-forth rotate + scale keeps the craters
+   fixed but still feels alive instead of a static painted disc. */
+@keyframes moonLibration {
+  0%, 100%  { transform: rotate(-2.5deg) scale(1); }
+  50%       { transform: rotate(2.5deg) scale(1.015); }
+}
+
+/* A soft diagonal light glint that sweeps across the surface every
+   few seconds, like moonlight catching the curve of the sphere. */
+@keyframes moonGlint {
+  0%   { transform: translate(-120%, -120%) rotate(25deg); opacity: 0; }
+  8%   { opacity: 0.55; }
+  20%  { opacity: 0; }
+  100% { transform: translate(120%, 120%) rotate(25deg); opacity: 0; }
+}
+
+/* Surface texture built from several overlapping radial-gradient "craters"
+   plus a soft directional shade (light from upper-left, like a real moon
+   photo) instead of flat box-shadow rings. */
+.galaxy-moon {
+  width: 100%;
+  height: 100%;
+  border-radius: 9999px;
+  position: relative;
+  overflow: hidden;
+  animation: moonLibration 10s ease-in-out infinite;
+  background:
+    radial-gradient(circle at 32% 66%, rgba(255,255,255,0.55) 0%, transparent 7%),
+    radial-gradient(circle at 60% 72%, rgba(120,124,140,0.5) 0%, transparent 9%),
+    radial-gradient(circle at 70% 38%, rgba(120,124,140,0.45) 0%, transparent 11%),
+    radial-gradient(circle at 40% 25%, rgba(120,124,140,0.4) 0%, transparent 8%),
+    radial-gradient(circle at 22% 45%, rgba(120,124,140,0.35) 0%, transparent 13%),
+    radial-gradient(circle at 78% 60%, rgba(255,255,255,0.3) 0%, transparent 6%),
+    radial-gradient(circle at 35% 30%, #ffffff 0%, #e4e7f0 30%, #b9bccb 62%, #7d8194 88%, #5c6072 100%);
+  box-shadow:
+    inset -14px -12px 26px 0 rgba(0, 0, 0, 0.35),
+    inset 8px 10px 18px 0 rgba(255, 255, 255, 0.25);
+}
+
+.galaxy-moon::after {
+  content: "";
+  position: absolute;
+  top: -60%;
+  left: -60%;
+  width: 55%;
+  height: 220%;
+  background: linear-gradient(100deg, transparent 40%, rgba(255, 255, 255, 0.4) 50%, transparent 60%);
+  animation: moonGlint 9s ease-in-out infinite;
+  pointer-events: none;
+}
+
+/* ===== Landing-page content entrance animations ===== */
+
+@keyframes fadeInDown {
+  from { opacity: 0; transform: translateY(-18px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes logoFloat {
+  0%, 100% { transform: translateY(0); }
+  50%      { transform: translateY(-7px); }
+}
+
+.animate-fade-in-down {
+  animation: fadeInDown 0.8s ease both;
+}
+
+.animate-fade-in-up {
+  animation: fadeInUp 0.8s ease both;
+}
+
+/* Staggered reveal delays so logo → heading → paragraph → buttons
+   appear one after another instead of all at once. */
+.delay-1 { animation-delay: 0.15s; }
+.delay-2 { animation-delay: 0.35s; }
+.delay-3 { animation-delay: 0.55s; }
+.delay-4 { animation-delay: 0.75s; }
+
+/* Logo fades/drops in once, then keeps a slow gentle float forever. */
+.logo-float {
+  animation:
+    fadeInDown 0.8s ease both,
+    logoFloat 4.5s ease-in-out infinite;
+  animation-delay: 0s, 0.9s;
+}
+
+/* Slow color shimmer across the gradient headline word, layered on
+   top of the existing .gradient-text-blue fill. */
+@keyframes textShimmer {
+  0%   { background-position: 0% 50%; }
+  100% { background-position: 200% 50%; }
+}
+
+.heading-shimmer {
+  background-size: 200% auto;
+  animation: textShimmer 4.5s linear infinite;
+}
+
+/* Blinking caret shown while/after the heading types out */
+@keyframes caretBlink {
+  0%, 45%  { opacity: 1; }
+  50%, 95% { opacity: 0; }
+  100%     { opacity: 1; }
+}
+
+.typing-caret {
+  display: inline-block;
+  width: 2px;
+  margin-left: 2px;
+  background: #ffffff;
+  animation: caretBlink 0.9s steps(1) infinite;
+  vertical-align: -0.1em;
+}
+
+/* Each typed character mounts once and eases in on its own — since
+   already-revealed letters keep their React key, they never replay
+   this, only the newest character does. */
+@keyframes charIn {
+  from { opacity: 0; transform: translateY(5px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.char-in {
+  display: inline-block;
+  animation: charIn 0.35s ease both;
+}
+
+/* Keeps a whole word (e.g. the typed "Instantly") from ever splitting
+   across two lines, even if a global reset elsewhere allows aggressive
+   word-breaking — if it doesn't fit, it moves down as one unit instead. */
+.no-break-word {
+  display: inline-block;
+  white-space: nowrap;
+  overflow-wrap: normal;
+  word-break: normal;
 }

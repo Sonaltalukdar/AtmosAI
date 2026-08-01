@@ -1,18 +1,18 @@
-// WeatherContext.jsx
 import { createContext, useContext, useState } from "react";
-import { mockLocations } from "../data/Location.js";
 
 const WeatherContext = createContext();
 
 export function WeatherProvider({ children }) {
-  // Default location: Kolkata
-  const [weatherData, setWeatherData] = useState(mockLocations.kolkata);
+  const [weatherData, setWeatherData] = useState(null);
+  const [forecastData, setForecastData] = useState(null);
 
   return (
     <WeatherContext.Provider
       value={{
         weatherData,
         setWeatherData,
+        forecastData,
+        setForecastData,
       }}
     >
       {children}

@@ -1,96 +1,277 @@
 import { useState, useEffect } from "react";
 import { X } from "lucide-react";
+import axios from "axios";
 
-function AuthModal({ isOpen, onClose, startInLogin }) {
+function AuthModal({ isOpen, onClose, startInLogin, onLoginSuccess }) {
     const [isLogin, setIsLogin] = useState(startInLogin);
+
+    const [name, setName] = useState("");
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
+
+    const [loading, setLoading] = useState(false);
+    const [error, setError] = useState("");
 
     useEffect(() => {
         setIsLogin(startInLogin);
+        setError("");
     }, [startInLogin, isOpen]);
 
     if (!isOpen) return null;
 
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+
+        setLoading(true);
+        setError("");
+
+        try {
+            let response;
+
+            if (isLogin) {
+                response = await axios.post(
+                    "http://localhost:5000/api/auth/login",
+                    {
+                        email,
+                        password,
+                    }
+                );
+            } else {
+                response = await axios.post(
+                    "http://localhost:5000/api/auth/signup",
+                    {
+                        name,
+                        email,
+                        password,
+                    }
+                );
+            }
+
+            const { token, user } = response.data;
+
+            localStorage.setItem("token", token);
+            localStorage.setItem("user", JSON.stringify(user));
+
+            onLoginSuccess(user);
+            onClose();
+        } catch (err) {
+            setError(
+                err.response?.data?.message ||
+                "Something went wrong"
+            );
+        } finally {
+            setLoading(false);
+        }
+    };
+
     return (
         <div
             className="
-            fixed inset-0 z-[100]
-            flex items-center justify-center
-            bg-black/60 backdrop-blur-sm
+                fixed inset-0 z-[100]
+                flex items-center justify-center
+                px-4
+                py-6
+                overflow-y-auto
+                bg-black/60
+                backdrop-blur-sm
             "
             onClick={onClose}
         >
             <div
                 onClick={(e) => e.stopPropagation()}
                 className="
-                relative
-                w-[380px]
-                rounded-3xl
-                p-8
-                bg-white/10
-                backdrop-blur-xl
-                border border-white/20
-                shadow-2xl
-                text-white
+                    relative
+                    w-full
+                    max-w-[380px]
+                    max-h-[calc(100vh-48px)]
+                    overflow-y-auto
+                    rounded-3xl
+                    p-6
+                    sm:p-8
+                    bg-white/10
+                    backdrop-blur-xl
+                    border border-white/20
+                    shadow-2xl
+                    text-white
                 "
             >
-                {/* Close button */}
+                {/* Close Button */}
                 <button
                     onClick={onClose}
-                    className="absolute top-4 right-4 text-white/70 hover:text-white cursor-pointer"
+                    className="
+                        absolute
+                        top-4
+                        right-4
+                        text-white/70
+                        hover:text-white
+                        transition-colors
+                        cursor-pointer
+                    "
                 >
                     <X size={22} />
                 </button>
 
-                {/* Title */}
-                <h2 className="text-2xl font-bold mb-6 text-center">
+                {/* Heading */}
+                <h2
+                    className="
+                        text-xl
+                        sm:text-2xl
+                        font-bold
+                        mb-5
+                        sm:mb-6
+                        text-center
+                    "
+                >
                     {isLogin ? "Log In" : "Sign Up"}
                 </h2>
 
                 {/* Form */}
-                <form className="flex flex-col gap-4">
+                <form
+                    onSubmit={handleSubmit}
+                    className="flex flex-col gap-3.5 sm:gap-4"
+                >
+                    {/* Name */}
+                    {!isLogin && (
+                        <input
+                            type="text"
+                            placeholder="Full Name"
+                            value={name}
+                            onChange={(e) => setName(e.target.value)}
+                            className="
+                                w-full
+                                h-[46px]
+                                px-4
+                                rounded-full
+                                bg-white/10
+                                border border-white/20
+                                text-white
+                                text-sm
+                                outline-none
+                                placeholder:text-white/40
+                                focus:border-white/40
+                                transition-colors
+                            "
+                        />
+                    )}
+
+                    {/* Email */}
                     <input
                         type="email"
                         placeholder="Email"
+                        value={email}
+                        onChange={(e) => setEmail(e.target.value)}
                         className="
-                        h-[46px] px-4 rounded-full
-                        bg-white/10 border border-white/20
-                        text-white placeholder-white/50
-                        outline-none focus:border-white/50
+                            w-full
+                            h-[46px]
+                            px-4
+                            rounded-full
+                            bg-white/10
+                            border border-white/20
+                            text-white
+                            text-sm
+                            outline-none
+                            placeholder:text-white/40
+                            focus:border-white/40
+                            transition-colors
                         "
                     />
+
+                    {/* Password */}
                     <input
                         type="password"
                         placeholder="Password"
+                        value={password}
+                        onChange={(e) => setPassword(e.target.value)}
                         className="
-                        h-[46px] px-4 rounded-full
-                        bg-white/10 border border-white/20
-                        text-white placeholder-white/50
-                        outline-none focus:border-white/50
+                            w-full
+                            h-[46px]
+                            px-4
+                            rounded-full
+                            bg-white/10
+                            border border-white/20
+                            text-white
+                            text-sm
+                            outline-none
+                            placeholder:text-white/40
+                            focus:border-white/40
+                            transition-colors
                         "
                     />
 
+                    {/* Error */}
+                    {error && (
+                        <p
+                            className="
+                                text-red-400
+                                text-xs
+                                sm:text-sm
+                                text-center
+                                break-words
+                            "
+                        >
+                            {error}
+                        </p>
+                    )}
+
+                    {/* Submit */}
                     <button
                         type="submit"
+                        disabled={loading}
                         className="
-                        btn-lift shine
-                        h-[46px] rounded-full
-                        bg-gray-200 text-black
-                        font-bold cursor-pointer
-                        mt-2
+                            w-full
+                            h-[46px]
+                            rounded-full
+                            bg-gray-200
+                            text-black
+                            font-bold
+                            text-sm
+                            mt-1
+                            sm:mt-2
+                            transition-all
+                            hover:bg-gray-300
+                            disabled:opacity-60
+                            disabled:cursor-not-allowed
+                            cursor-pointer
                         "
                     >
-                        {isLogin ? "Log In" : "Sign Up"}
+                        {loading
+                            ? "Please wait..."
+                            : isLogin
+                                ? "Log In"
+                                : "Sign Up"}
                     </button>
                 </form>
 
-                {/* Toggle */}
-                <p className="text-center text-white/70 text-sm mt-5">
-                    {isLogin ? "New user? " : "Already have an account? "}
+                {/* Switch Login / Signup */}
+                <p
+                    className="
+                        text-center
+                        text-white/70
+                        text-xs
+                        sm:text-sm
+                        mt-4
+                        sm:mt-5
+                    "
+                >
+                    {isLogin
+                        ? "New user? "
+                        : "Already have an account? "}
+
                     <span
-                        onClick={() => setIsLogin(!isLogin)}
-                        className="text-white font-semibold cursor-pointer hover:underline"
+                        onClick={() => {
+                            setIsLogin(!isLogin);
+                            setError("");
+                        }}
+                        className="
+                            text-white
+                            font-semibold
+                            cursor-pointer
+                            hover:underline
+                        "
                     >
-                        {isLogin ? "Sign Up here" : "Log In here"}
+                        {isLogin
+                            ? "Sign Up here"
+                            : "Log In here"}
                     </span>
                 </p>
             </div>
