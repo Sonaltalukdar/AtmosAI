@@ -45,7 +45,17 @@ const HourlyForecast = () => {
         Hourly Forecast
       </h2>
 
-      <div className="flex-1 grid grid-cols-6 gap-2">
+      <div
+        className="
+          flex-1
+          flex
+          gap-2
+          overflow-x-auto
+          overflow-y-hidden
+          -mx-1
+          px-1
+        "
+      >
         {hourly.map((slot, index) => (
           <div
             key={slot.time}
@@ -59,6 +69,10 @@ const HourlyForecast = () => {
               gap-2.5
               py-3
               rounded-2xl
+              shrink-0
+              w-[76px]
+              sm:flex-1
+              sm:w-auto
               ${index === 0 ? "highlight-slot" : ""}
             `}
             style={{ animationDelay: `${0.1 + index * 0.06}s` }}

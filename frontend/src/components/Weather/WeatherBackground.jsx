@@ -1,3 +1,4 @@
+import { useEffect, useState } from "react";
 import { getWeatherTheme, getConditionKey } from "./WeatherThemes";
 
 /* ---------- Individual animated layers ---------- */
@@ -42,7 +43,7 @@ function CloudShape({ width = 200, opacity = 0.55 }) {
     );
 }
 
-function CloudyLayer() {
+function CloudyLayer({ isMobile }) {
     // A handful of real cloud shapes drifting at different speeds/heights/depths.
     const clouds = [
         { top: "8%", width: 260, opacity: 0.5, dur: 42, delay: 0 },
@@ -51,6 +52,7 @@ function CloudyLayer() {
         { top: "34%", width: 140, opacity: 0.3, dur: 50, delay: -8 },
         { top: "16%", width: 200, opacity: 0.45, dur: 63, delay: -25 },
     ];
+    const factor = isMobile ? 0.55 : 1;
     return (
         <>
             {clouds.map((c, i) => (
@@ -63,7 +65,7 @@ function CloudyLayer() {
                         animationDelay: `${c.delay}s`,
                     }}
                 >
-                    <CloudShape width={c.width} opacity={c.opacity} />
+                    <CloudShape width={c.width * factor} opacity={c.opacity} />
                 </div>
             ))}
         </>
@@ -95,16 +97,17 @@ function RainLayer() {
     );
 }
 
-function ThunderstormLayer() {
+function ThunderstormLayer({ isMobile }) {
+    const factor = isMobile ? 0.55 : 1;
     return (
         <>
             <RainLayer />
             {/* thunderstorm skies are also cloudy — layer a couple of dark clouds in */}
             <div className="weather-cloud-shape" style={{ top: "6%", animationDuration: "50s" }}>
-                <CloudShape width={260} opacity={0.4} />
+                <CloudShape width={260 * factor} opacity={0.4} />
             </div>
             <div className="weather-cloud-shape" style={{ top: "20%", animationDuration: "65s", animationDelay: "-20s" }}>
-                <CloudShape width={180} opacity={0.3} />
+                <CloudShape width={180 * factor} opacity={0.3} />
             </div>
             <div className="weather-lightning" />
         </>
@@ -112,7 +115,8 @@ function ThunderstormLayer() {
 }
 
 /* Smoke-style fog: soft, blurred, drifting layers of varying size/height/opacity */
-function FogLayer() {
+function FogLayer({ isMobile }) {
+  const factor = isMobile ? 0.55 : 1;
   const fogs = [
     { top: "10%", width: 900, height: 260, dur: 60, delay: 0, opacity: 0.4, scale: 1.2 },
     { top: "35%", width: 700, height: 220, dur: 48, delay: -20, opacity: 0.3, scale: 0.9 },
@@ -128,8 +132,8 @@ function FogLayer() {
           className="weather-fog-layer"
           style={{
             top: fog.top,
-            width: fog.width,
-            height: fog.height,
+            width: fog.width * factor,
+            height: fog.height * factor,
             opacity: fog.opacity,
             transform: `scale(${fog.scale})`,
             animationDuration: `${fog.dur}s`,
@@ -257,6 +261,18 @@ function WeatherBackground({ condition, children }) {
     const key = getConditionKey(condition);
     const Layer = key ? layerByKey[key] : null;
 
+    const [isMobile, setIsMobile] = useState(false);
+
+    useEffect(() => {
+        const mq = window.matchMedia("(max-width: 639px)");
+        setIsMobile(mq.matches);
+
+        const handleChange = (e) => setIsMobile(e.matches);
+        mq.addEventListener("change", handleChange);
+
+        return () => mq.removeEventListener("change", handleChange);
+    }, []);
+
     return (
         <div
             className={`
@@ -278,13 +294,14 @@ function WeatherBackground({ condition, children }) {
                     : undefined
             }
         >
-            {/* Animated weather layer (clouds/rain/snow/etc.), clipped to viewport.
-                Scaled down on mobile so cloud/fog/rain elements (sized for
-                desktop) don't look oversized on small screens, and edge-faded
-                so drifting elements exit the screen smoothly instead of a
-                hard cut. */}
-            <div className="absolute inset-0 overflow-hidden pointer-events-none scale-[0.6] sm:scale-100 origin-top weather-layer-fade">
-                {Layer && <Layer />}
+            {/* Animated weather layer (clouds/rain/snow/etc.), clipped to full
+                viewport (no scale/shrink on this box — that used to shrink the
+                clipping boundary itself and cause a hard visible cut).
+                Individual elements (clouds/fog) render at a smaller size on
+                mobile via the isMobile prop instead, and edges fade softly
+                so drifting elements exit smoothly. */}
+            <div className="absolute inset-0 overflow-hidden pointer-events-none weather-layer-fade">
+                {Layer && <Layer isMobile={isMobile} />}
             </div>
 
             {/* subtle dark overlay so all existing text/cards stay readable */}
