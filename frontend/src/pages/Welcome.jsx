@@ -109,7 +109,7 @@ function Welcome({ onLoginSuccess }) {
             className="
                 galaxy-bg
                 relative
-                min-h-screen
+                h-[100dvh]
                 w-full
                 flex
                 flex-col
@@ -120,7 +120,7 @@ function Welcome({ onLoginSuccess }) {
                 text-white
                 px-4
                 sm:px-6
-                py-10
+                py-6
                 sm:py-6
                 overflow-hidden
             "
