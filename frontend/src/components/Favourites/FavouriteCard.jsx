@@ -19,6 +19,7 @@ function FavouriteCard({
     weather,
     loading,
     onRemove,
+    onSelect,
 }) {
     const condition =
         weather?.weather?.[0]?.description ||
@@ -30,6 +31,7 @@ function FavouriteCard({
 
     return (
         <div
+            onClick={() => onSelect?.(city)}
             className="
                 group
                 relative
@@ -47,6 +49,7 @@ function FavouriteCard({
                 duration-300
                 hover:-translate-y-1
                 hover:border-white/20
+                cursor-pointer
             "
         >
 
@@ -79,9 +82,10 @@ function FavouriteCard({
 
             {/* Remove Button */}
             <button
-                onClick={() =>
-                    onRemove(city.lat, city.lon)
-                }
+                onClick={(e) => {
+                    e.stopPropagation();
+                    onRemove(city.lat, city.lon);
+                }}
                 className="
                     absolute
                     top-3
@@ -179,6 +183,8 @@ function FavouriteCard({
                     className="
                         text-right
                         shrink-0
+                        mt-5
+                        sm:mt-0
                     "
                 >
                     {!loading &&

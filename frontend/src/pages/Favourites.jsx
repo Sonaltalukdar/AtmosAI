@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { Star } from "lucide-react";
 
 import AddFavouriteBar from "../components/Favourites/AddFavouriteBar.jsx";
@@ -9,12 +10,23 @@ import {
   addFavourite,
   removeFavourite,
 } from "../services/favouritesStorage.js";
-import { getWeatherAtPoint } from "../services/weatherMapApi.js";
+import {
+  getWeatherAtPoint,
+} from "../services/weatherMapApi.js";
+import {
+  getWeatherByCoords,
+  getForecastByCoords,
+} from "../services/weatherApi.js";
+import { useWeatherCondition } from "../Context/WeatherContext.jsx";
 
 function Favourites() {
+  const navigate = useNavigate();
+  const { setWeatherData, setForecastData } = useWeatherCondition();
+
   const [favourites, setFavourites] = useState([]);
   const [weatherMap, setWeatherMap] = useState({});
   const [loadingKeys, setLoadingKeys] = useState({});
+  const [selecting, setSelecting] = useState(false);
 
   useEffect(() => {
     setFavourites(getFavourites());
@@ -58,6 +70,27 @@ function Favourites() {
     setFavourites(updated);
   };
 
+  // Favourite card select korle — weather fetch kore Home-e navigate kora hoy,
+  // Home-er nijer current-location auto-load-ke skip korte state-e flag pathano hoy.
+  const handleSelect = async (city) => {
+    if (selecting) return;
+    setSelecting(true);
+
+    try {
+      const weather = await getWeatherByCoords(city.lat, city.lon);
+      setWeatherData(weather);
+
+      const forecast = await getForecastByCoords(city.lat, city.lon);
+      setForecastData(forecast);
+
+      navigate("/home", { state: { skipAutoLocation: true } });
+    } catch (error) {
+      console.error("Failed to load weather for selected favourite:", error);
+    } finally {
+      setSelecting(false);
+    }
+  };
+
   return (
     <div className="max-w-4xl mx-auto px-6 pt-6 pb-16 min-h-[70vh]">
       <div className="flex justify-center mb-8">
@@ -84,6 +117,7 @@ function Favourites() {
                 weather={weatherMap[key]}
                 loading={loadingKeys[key]}
                 onRemove={handleRemove}
+                onSelect={handleSelect}
               />
             );
           })}

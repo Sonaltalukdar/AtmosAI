@@ -3,6 +3,7 @@ import HourlyForecast from "../components/Home/HourlyForecast.jsx";
 import WeeklyForecast from "../components/Home/WeeklyForecast.jsx";
 import AirQuality from "../components/Home/AirQuality.jsx";
 import { useEffect, useState } from "react";
+import { useLocation } from "react-router-dom";
 import { useWeatherCondition } from "../Context/WeatherContext.jsx";
 import {
   getWeatherByCoords,
@@ -16,9 +17,19 @@ function Home() {
   const { weatherData, setWeatherData, setForecastData } =
     useWeatherCondition();
 
-  const [loading, setLoading] = useState(true);
+  const location = useLocation();
+  const skipAutoLocation = location.state?.skipAutoLocation;
+
+  const [loading, setLoading] = useState(!skipAutoLocation);
 
   useEffect(() => {
+    // Favourite card theke asha hole (weather already context-e set kora),
+    // current-location auto-detect skip kore dewa hoy jate override na hoy.
+    if (skipAutoLocation) {
+      setLoading(false);
+      return;
+    }
+
     const loadCurrentWeather = async () => {
       try {
         // Try user's current location
@@ -51,13 +62,14 @@ function Home() {
     };
 
     loadCurrentWeather();
-  }, [setWeatherData, setForecastData]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [setWeatherData, setForecastData, skipAutoLocation]);
 
   if (loading) {
     return (
       <div
         className="
-          min-h-screen
+          h-[100dvh]
           w-full
           flex
           items-center
@@ -103,7 +115,7 @@ function Home() {
 
   if (!weatherData) {
     return (
-      <div className="min-h-screen flex items-center justify-center text-red-400">
+      <div className="min-h-[100dvh] flex items-center justify-center text-red-400">
         Failed to load weather data.
       </div>
     );
