@@ -137,8 +137,9 @@ function Navbar({ onOpenAuth, currentUser, onLogout }) {
                     {showSearchbar && (
                         <div
                             className="
-                                block
-                                w-[135px]
+                                flex-1
+                                min-w-0
+                                sm:flex-none
                                 sm:w-auto
                             "
                         >
