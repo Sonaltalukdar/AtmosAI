@@ -1,7 +1,7 @@
 import axios from "axios";
 import { getWeatherEmoji } from "../utils/weatherIcons.js";
 
-const BASE_URL = "http://localhost:5000/api/weather";
+const BASE_URL = "https://atmosai-80iq.onrender.com/api/weather";
 
 function formatDate() {
   const today = new Date();

@@ -138,7 +138,7 @@ const AIChat = forwardRef(function AIChat(
             }
 
             const res = await axios.post(
-                "http://localhost:5000/api/chat",
+                "https://atmosai-80iq.onrender.com/api/chat",
                 formData,
                 {
                     headers: {

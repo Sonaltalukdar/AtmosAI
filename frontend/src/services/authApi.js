@@ -1,4 +1,4 @@
-const API_BASE = "http://localhost:5000/api/auth";
+const API_BASE = "https://atmosai-80iq.onrender.com/api/auth";
 
 export async function fetchProfile() {
   const token = localStorage.getItem("token");
