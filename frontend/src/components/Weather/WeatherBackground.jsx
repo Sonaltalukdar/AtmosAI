@@ -278,8 +278,10 @@ function WeatherBackground({ condition, children }) {
                     : undefined
             }
         >
-            {/* Animated weather layer (clouds/rain/snow/etc.), clipped to viewport */}
-            <div className="absolute inset-0 overflow-hidden pointer-events-none">
+            {/* Animated weather layer (clouds/rain/snow/etc.), clipped to viewport.
+                Scaled down on mobile so cloud/fog/rain elements (sized for
+                desktop) don't look oversized on small screens. */}
+            <div className="absolute inset-0 overflow-hidden pointer-events-none scale-[0.6] sm:scale-100 origin-top">
                 {Layer && <Layer />}
             </div>
 
