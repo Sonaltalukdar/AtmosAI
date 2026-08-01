@@ -44,15 +44,36 @@ function WeatherMap() {
   };
 
   const handleUseCurrentLocation = async () => {
-    try {
-      const { lat, lon } = await getCurrentLocation();
+    console.log("📍 Current Location button clicked");
 
-      setFlyToPosition({ lat, lon });
-      setMarkerPosition({ lat, lon });
+    try {
+      const { lat, lon, accuracy } = await getCurrentLocation();
+
+      console.log("Latitude:", lat);
+      console.log("Longitude:", lon);
+      console.log("Accuracy:", accuracy);
+
+      setFlyToPosition({
+        lat,
+        lon,
+      });
+
+      setMarkerPosition({
+        lat,
+        lon,
+      });
 
       await fetchWeatherForPoint(lat, lon);
+
+      return true;
     } catch (error) {
-      console.error("Could not get current location:", error);
+      console.error("Current location error:", error);
+
+      alert(
+        error.message ||
+          "Unable to access your current location."
+      );
+
       throw error;
     }
   };
@@ -65,7 +86,6 @@ function WeatherMap() {
         zIndex: 0,
       }}
     >
-      {/* MAP */}
       <MapContainer
         activeLayer={activeLayer}
         flyToPosition={flyToPosition}
@@ -73,7 +93,6 @@ function WeatherMap() {
         onMapClick={handleMapClick}
       />
 
-      {/* SEARCH BAR */}
       <div
         className="
           absolute
@@ -93,7 +112,6 @@ function WeatherMap() {
         </div>
       </div>
 
-      {/* WEATHER LAYERS */}
       <div
         className="
           absolute
@@ -111,7 +129,6 @@ function WeatherMap() {
         />
       </div>
 
-      {/* LOCATION INFO */}
       <LocationInfoCard
         data={weatherData}
         loading={loadingWeather}
@@ -121,7 +138,6 @@ function WeatherMap() {
         }}
       />
 
-      {/* MAP LEGEND */}
       <MapLegend activeLayer={activeLayer} />
     </div>
   );
