@@ -1,8 +1,9 @@
 const STORAGE_KEY = "atmosai_last_location";
-const SNAP_DISTANCE_KM = 2; 
+const SNAP_DISTANCE_KM = 2;
 
 function getDistanceKm(lat1, lon1, lat2, lon2) {
-  const R = 6371; // Earth radius in km
+  const R = 6371;
+
   const dLat = ((lat2 - lat1) * Math.PI) / 180;
   const dLon = ((lon2 - lon1) * Math.PI) / 180;
 
@@ -13,14 +14,13 @@ function getDistanceKm(lat1, lon1, lat2, lon2) {
       Math.sin(dLon / 2) *
       Math.sin(dLon / 2);
 
-  const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
-  return R * c;
+  return R * (2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a)));
 }
 
 function getStoredLocation() {
   try {
-    const raw = localStorage.getItem(STORAGE_KEY);
-    return raw ? JSON.parse(raw) : null;
+    const saved = localStorage.getItem(STORAGE_KEY);
+    return saved ? JSON.parse(saved) : null;
   } catch {
     return null;
   }
@@ -30,25 +30,29 @@ function storeLocation(lat, lon, accuracy) {
   try {
     localStorage.setItem(
       STORAGE_KEY,
-      JSON.stringify({ lat, lon, accuracy })
+      JSON.stringify({
+        lat,
+        lon,
+        accuracy,
+      })
     );
   } catch {
-    // localStorage unavailable — no-op
+    // Ignore localStorage errors
   }
 }
 
 export function getCurrentLocation() {
   return new Promise((resolve, reject) => {
     if (!navigator.geolocation) {
-      reject(new Error("Geolocation not supported"));
+      reject(new Error("Geolocation is not supported by this browser."));
       return;
     }
 
     navigator.geolocation.getCurrentPosition(
       (position) => {
-        const freshLat = position.coords.latitude;
-        const freshLon = position.coords.longitude;
-        const freshAccuracy = position.coords.accuracy;
+        const lat = position.coords.latitude;
+        const lon = position.coords.longitude;
+        const accuracy = position.coords.accuracy;
 
         const stored = getStoredLocation();
 
@@ -56,38 +60,77 @@ export function getCurrentLocation() {
           const distance = getDistanceKm(
             stored.lat,
             stored.lon,
-            freshLat,
-            freshLon
+            lat,
+            lon
           );
 
-          if (distance <= SNAP_DISTANCE_KM && freshAccuracy >= stored.accuracy) {
+          if (
+            distance <= SNAP_DISTANCE_KM &&
+            accuracy >= stored.accuracy
+          ) {
+            console.log("Using cached location");
+
             resolve({
               lat: stored.lat,
               lon: stored.lon,
               accuracy: stored.accuracy,
             });
+
             return;
           }
         }
 
-        storeLocation(freshLat, freshLon, freshAccuracy);
+        storeLocation(lat, lon, accuracy);
+
+        console.log("Using fresh GPS location");
 
         resolve({
-          lat: freshLat,
-          lon: freshLon,
-          accuracy: freshAccuracy,
+          lat,
+          lon,
+          accuracy,
         });
       },
+
       (error) => {
-        reject(error);
+        console.error("Geolocation Error:", error);
+
+        switch (error.code) {
+          case error.PERMISSION_DENIED:
+            reject(
+              new Error(
+                "Location permission denied by user."
+              )
+            );
+            break;
+
+          case error.POSITION_UNAVAILABLE:
+            reject(
+              new Error(
+                "Location information unavailable."
+              )
+            );
+            break;
+
+          case error.TIMEOUT:
+            reject(
+              new Error(
+                "Location request timed out."
+              )
+            );
+            break;
+
+          default:
+            reject(
+              new Error(
+                "Unable to get current location."
+              )
+            );
+        }
       },
+
       {
-        // Ask the device to use GPS/WiFi-based positioning instead of
-        // coarse IP/network-based lookup, wherever the hardware supports it.
         enableHighAccuracy: true,
-        // Give it enough time to get a GPS fix instead of failing fast
         timeout: 15000,
-        // Don't reuse a cached position — always get a fresh reading
         maximumAge: 0,
       }
     );
