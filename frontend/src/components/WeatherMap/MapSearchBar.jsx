@@ -1,11 +1,15 @@
 import { useState } from "react";
-import { Search, LocateFixed } from "lucide-react";
+import { Search, LocateFixed, Loader2 } from "lucide-react";
 import { searchCity } from "../../services/weatherMapApi.js";
 
-function MapSearchBar({ onLocationSelect, onUseCurrentLocation }) {
+function MapSearchBar({
+  onLocationSelect,
+  onUseCurrentLocation,
+}) {
   const [query, setQuery] = useState("");
   const [results, setResults] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [locating, setLocating] = useState(false);
   const [showResults, setShowResults] = useState(false);
 
   const handleSearch = async (e) => {
@@ -36,9 +40,31 @@ function MapSearchBar({ onLocationSelect, onUseCurrentLocation }) {
       state: place.state,
     });
 
-    setQuery(`${place.name}${place.state ? ", " + place.state : ""}, ${place.country}`);
+    setQuery(
+      `${place.name}${place.state ? ", " + place.state : ""}, ${place.country}`
+    );
+
     setShowResults(false);
     setResults([]);
+  };
+
+  const handleCurrentLocation = async () => {
+    setLocating(true);
+
+    try {
+      await onUseCurrentLocation();
+      setQuery("Current Location");
+      setShowResults(false);
+      setResults([]);
+    } catch (err) {
+      console.error(err);
+
+      alert(
+        "Unable to access your location. Please allow location permission."
+      );
+    } finally {
+      setLocating(false);
+    }
   };
 
   return (
@@ -68,7 +94,10 @@ function MapSearchBar({ onLocationSelect, onUseCurrentLocation }) {
           shadow-lg
         "
       >
-        <Search size={16} className="text-gray-400 shrink-0" />
+        <Search
+          size={16}
+          className="text-gray-400 shrink-0"
+        />
 
         <input
           type="text"
@@ -87,24 +116,33 @@ function MapSearchBar({ onLocationSelect, onUseCurrentLocation }) {
 
         <button
           type="button"
-          onClick={onUseCurrentLocation}
+          onClick={handleCurrentLocation}
+          disabled={locating}
           className="
             shrink-0
             flex
             items-center
             justify-center
-            w-7
-            h-7
+            w-8
+            h-8
             rounded-full
             text-sky-400
             hover:bg-white/[0.08]
             transition-all
             duration-300
             cursor-pointer
+            disabled:opacity-50
           "
           title="Use current location"
         >
-          <LocateFixed size={15} />
+          {locating ? (
+            <Loader2
+              size={15}
+              className="animate-spin"
+            />
+          ) : (
+            <LocateFixed size={15} />
+          )}
         </button>
       </form>
 
@@ -122,17 +160,22 @@ function MapSearchBar({ onLocationSelect, onUseCurrentLocation }) {
           "
         >
           {loading && (
-            <p className="text-xs text-gray-400 px-4 py-3">Searching...</p>
+            <p className="text-xs text-gray-400 px-4 py-3">
+              Searching...
+            </p>
           )}
 
           {!loading && results.length === 0 && (
-            <p className="text-xs text-gray-400 px-4 py-3">No results found</p>
+            <p className="text-xs text-gray-400 px-4 py-3">
+              No results found
+            </p>
           )}
 
           {!loading &&
             results.map((place, index) => (
               <button
                 key={index}
+                type="button"
                 onClick={() => handleSelectResult(place)}
                 className="
                   w-full
@@ -152,7 +195,10 @@ function MapSearchBar({ onLocationSelect, onUseCurrentLocation }) {
                 "
               >
                 {place.name}
-                {place.state ? `, ${place.state}` : ""}, {place.country}
+                {place.state
+                  ? `, ${place.state}`
+                  : ""}
+                , {place.country}
               </button>
             ))}
         </div>
