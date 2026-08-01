@@ -129,7 +129,7 @@ const Searchbar = () => {
 
   return (
     <div className="relative" ref={wrapperRef}>
-      <div className="search-glow flex items-center gap-2.5 bg-white/[0.05] border border-white/10 rounded-full px-4 h-[42px] w-[280px] backdrop-blur-xl">
+      <div className="search-glow flex items-center gap-2.5 bg-white/[0.05] border border-white/10 rounded-full px-4 h-[42px] w-full sm:w-[280px] backdrop-blur-xl">
         <Search size={16} className="text-gray-400 flex-shrink-0" />
 
         <input
@@ -154,7 +154,8 @@ const Searchbar = () => {
             absolute
             top-[50px]
             left-0
-            w-[320px]
+            w-[260px]
+            sm:w-[320px]
             max-h-[280px]
             overflow-y-auto
             rounded-2xl
