@@ -285,7 +285,9 @@ function Welcome({ onLoginSuccess }) {
                         shine
                         h-[46px]
                         w-full
+                        max-w-[240px]
                         sm:w-auto
+                        sm:max-w-none
                         px-10
                         min-w-[130px]
                         rounded-full
@@ -309,7 +311,9 @@ function Welcome({ onLoginSuccess }) {
                         shine
                         h-[46px]
                         w-full
+                        max-w-[240px]
                         sm:w-auto
+                        sm:max-w-none
                         px-10
                         min-w-[130px]
                         rounded-full
