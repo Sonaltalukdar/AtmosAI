@@ -1,7 +1,8 @@
 import express from "express";
-import nodemailer from "nodemailer";
+import { Resend } from "resend";
 
 const router = express.Router();
+const resend = new Resend(process.env.RESEND_API_KEY);
 
 router.post("/", async (req, res) => {
   const { name, email, message } = req.body;
@@ -11,17 +12,9 @@ router.post("/", async (req, res) => {
   }
 
   try {
-    const transporter = nodemailer.createTransport({
-      service: "gmail",
-      auth: {
-        user: process.env.EMAIL_USER,
-        pass: process.env.EMAIL_PASS,
-      },
-    });
-
-    await transporter.sendMail({
-      from: process.env.EMAIL_USER,
-      to: process.env.EMAIL_USER,
+    await resend.emails.send({
+      from: "AtmosAI Contact <onboarding@resend.dev>",
+      to: process.env.CONTACT_RECEIVER_EMAIL,
       replyTo: email,
       subject: `New message from ${name} (AtmosAI Contact Form)`,
       text: `Name: ${name}\nEmail: ${email}\n\nMessage:\n${message}`,
