@@ -686,7 +686,7 @@ function Profile({
     return (
       <div
         className="
-          min-h-screen
+          min-h-[100dvh]
           w-full
           flex
           items-center
@@ -710,7 +710,7 @@ function Profile({
     return (
       <div
         className="
-          min-h-screen
+          min-h-[100dvh]
           w-full
           flex
           items-center
@@ -729,7 +729,7 @@ function Profile({
   return (
     <div
       className="
-        min-h-screen
+        min-h-[100dvh]
         w-full
         flex
         items-center
@@ -737,8 +737,7 @@ function Profile({
         bg-[#02040a]
         px-4
         sm:px-6
-        py-20
-        sm:py-10
+        py-6
         relative
       "
     >
