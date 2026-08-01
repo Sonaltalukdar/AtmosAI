@@ -3,7 +3,7 @@ import cors from "cors";
 import authRoutes from "./routes/AuthRoutes.js";
 import weatherRoutes from "./routes/WeatherRoutes.js";
 import chatRoutes from "./routes/ChatRoutes.js";
-import contactRoutes from "./routes/contact.js";
+import contactRoutes from "./routes/Contact.js";
 
 const app = express();
 
