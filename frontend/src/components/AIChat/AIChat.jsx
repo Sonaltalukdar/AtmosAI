@@ -222,7 +222,10 @@ const AIChat = forwardRef(function AIChat(
                         flex
                         flex-col
                         items-center
-                        justify-center
+                        justify-start
+                        sm:justify-center
+                        pt-[8vh]
+                        sm:pt-0
                         gap-5
                         sm:gap-7
                         px-4

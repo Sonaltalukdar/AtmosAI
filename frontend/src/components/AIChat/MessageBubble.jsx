@@ -405,7 +405,7 @@ function MessageBubble({
                                     <FormattedMessage text={message} />
                                 </div>
 
-                                {/* Action buttons — copy (both) + edit (user only) — show on hover */}
+                                {/* Action buttons — copy (both) + edit (user only) — always visible on mobile, hover-reveal on desktop */}
                                 <div
                                     className="
                     absolute
@@ -414,8 +414,9 @@ function MessageBubble({
                     flex
                     items-center
                     gap-2
-                    opacity-0
-                    group-hover:opacity-100
+                    opacity-100
+                    sm:opacity-0
+                    sm:group-hover:opacity-100
                     transition-opacity
                     duration-200
                     "
