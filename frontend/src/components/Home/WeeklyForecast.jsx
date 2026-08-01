@@ -47,8 +47,15 @@ const WeeklyForecast = () => {
       </h2>
 
       <div
-        className="flex-1 grid gap-2"
-        style={{ gridTemplateColumns: `repeat(${weekly.length}, 1fr)` }}
+        className="
+          flex-1
+          flex
+          gap-2
+          overflow-x-auto
+          overflow-y-hidden
+          -mx-1
+          px-1
+        "
       >
         {weekly.map((day, index) => (
           <div
@@ -64,6 +71,10 @@ const WeeklyForecast = () => {
               py-3
               px-2
               rounded-2xl
+              shrink-0
+              w-[76px]
+              sm:flex-1
+              sm:w-auto
               ${index === 0 ? "highlight-slot" : ""}
             `}
             style={{ animationDelay: `${0.1 + index * 0.06}s` }}

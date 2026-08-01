@@ -280,8 +280,10 @@ function WeatherBackground({ condition, children }) {
         >
             {/* Animated weather layer (clouds/rain/snow/etc.), clipped to viewport.
                 Scaled down on mobile so cloud/fog/rain elements (sized for
-                desktop) don't look oversized on small screens. */}
-            <div className="absolute inset-0 overflow-hidden pointer-events-none scale-[0.6] sm:scale-100 origin-top">
+                desktop) don't look oversized on small screens, and edge-faded
+                so drifting elements exit the screen smoothly instead of a
+                hard cut. */}
+            <div className="absolute inset-0 overflow-hidden pointer-events-none scale-[0.6] sm:scale-100 origin-top weather-layer-fade">
                 {Layer && <Layer />}
             </div>
 
