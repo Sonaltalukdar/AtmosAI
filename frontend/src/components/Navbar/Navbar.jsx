@@ -204,8 +204,10 @@ function Navbar({ onOpenAuth, currentUser, onLogout }) {
                                         right-0
                                         top-[50px]
                                         md:top-[54px]
-                                        w-[180px]
-                                        rounded-2xl
+                                        w-[140px]
+                                        sm:w-[180px]
+                                        rounded-xl
+                                        sm:rounded-2xl
                                         bg-[#0A0F1D]
                                         border
                                         border-slate-700
@@ -225,17 +227,22 @@ function Navbar({ onOpenAuth, currentUser, onLogout }) {
                                             w-full
                                             flex
                                             items-center
-                                            gap-3
-                                            px-5
-                                            py-3
+                                            gap-2
+                                            sm:gap-3
+                                            px-3
+                                            sm:px-5
+                                            py-2.5
+                                            sm:py-3
                                             text-left
                                             text-gray-200
+                                            text-[13px]
+                                            sm:text-[15px]
                                             hover:bg-sky-500/10
                                             hover:text-sky-400
                                             transition-all
                                         "
                                     >
-                                        <User size={16} />
+                                        <User size={15} />
                                         Profile
                                     </button>
 
@@ -250,17 +257,22 @@ function Navbar({ onOpenAuth, currentUser, onLogout }) {
                                             w-full
                                             flex
                                             items-center
-                                            gap-3
-                                            px-5
-                                            py-3
+                                            gap-2
+                                            sm:gap-3
+                                            px-3
+                                            sm:px-5
+                                            py-2.5
+                                            sm:py-3
                                             text-left
                                             text-gray-200
+                                            text-[13px]
+                                            sm:text-[15px]
                                             hover:bg-red-500/10
                                             hover:text-red-400
                                             transition-all
                                         "
                                     >
-                                        <LogOut size={16} />
+                                        <LogOut size={15} />
                                         Logout
                                     </button>
 
