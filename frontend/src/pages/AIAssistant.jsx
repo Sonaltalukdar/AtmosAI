@@ -12,7 +12,7 @@ function AIAssistant({ currentUser }) {
     return (
         <div
             className="relative w-full flex flex-col overflow-hidden"
-            style={{ height: "calc(100vh - var(--navbar-height))" }}
+            style={{ height: "calc(100dvh - var(--navbar-height))" }}
         >
             <AIChat suggestions={SUGGESTED_QUESTIONS} currentUser={currentUser} />
         </div>
