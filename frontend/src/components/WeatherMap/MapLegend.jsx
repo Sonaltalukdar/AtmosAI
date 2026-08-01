@@ -9,7 +9,7 @@ function MapLegend({ activeLayer }) {
     <div
       className="
         absolute
-        top-[136px]
+        top-[152px]
         right-3
         bottom-auto
         left-auto
