@@ -16,14 +16,12 @@ function Navbar({ onOpenAuth, currentUser, onLogout }) {
     const navigate = useNavigate();
     const location = useLocation();
 
-    // Searchbar shudhu Home page-e dekhabe
     const showSearchbar = location.pathname === "/home";
 
     const [menuOpen, setMenuOpen] = useState(false);
     const [mobileNavOpen, setMobileNavOpen] = useState(false);
     const menuRef = useRef(null);
 
-    // Dropdown er baire click korle bondho hobe
     useEffect(() => {
         function handleClickOutside(e) {
             if (
@@ -40,7 +38,6 @@ function Navbar({ onOpenAuth, currentUser, onLogout }) {
             document.removeEventListener("mousedown", handleClickOutside);
     }, []);
 
-    // Route change hole mobile menu bondho hoye jabe
     useEffect(() => {
         setMobileNavOpen(false);
     }, [location.pathname]);
@@ -131,9 +128,7 @@ function Navbar({ onOpenAuth, currentUser, onLogout }) {
                 <div className="flex items-center gap-2 sm:gap-3 md:gap-5">
 
                     {/* Searchbar
-                        Mobile + Desktop navbar-e thakbe
-                        Drawer-er vitore jabe na
-                    */}
+                        Mobile + Desktop */}
                     {showSearchbar && (
                         <div
                             className="
