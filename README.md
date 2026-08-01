@@ -91,7 +91,7 @@ AtmosAI/
 ### 1. Clone the repository
 
 ```bash
-git clone https://github.com/<your-username>/AtmosAI.git
+git clone https://github.com/Sonaltalukdar/AtmosAI.git
 cd AtmosAI
 ```
 
