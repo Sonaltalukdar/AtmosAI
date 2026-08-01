@@ -177,7 +177,7 @@ Answer based on the document content above.
       if (location && location.lat && location.lon) {
         try {
           const weatherResponse = await axios.get(
-            `http://localhost:5000/api/weather/coords/${location.lat}/${location.lon}`
+            `https://atmosai-80iq.onrender.com/api/weather/coords/${location.lat}/${location.lon}`
           );
           const weather = weatherResponse.data;
 
@@ -214,7 +214,7 @@ their current location if relevant. Do not create fake weather information.
 
         try {
           const weatherResponse = await axios.get(
-            `http://localhost:5000/api/weather/${encodeURIComponent(city)}`
+            `https://atmosai-80iq.onrender.com/api/weather/${encodeURIComponent(city)}`
           );
           const weather = weatherResponse.data;
 
