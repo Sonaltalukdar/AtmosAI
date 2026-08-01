@@ -29,15 +29,15 @@ function TypingIndicator() {
                 className="
                 flex
                 flex-col
-                gap-2.5
-                rounded-[26px]
+                gap-1.5
+                rounded-[22px]
                 rounded-bl-md
                 border
                 border-white/10
                 bg-white/[0.07]
                 backdrop-blur-xl
-                px-8
-                py-6
+                px-4
+                py-3
                 shadow-xl
                 shadow-black/20
                 "
@@ -61,14 +61,14 @@ function TypingIndicator() {
                     className="
                     flex
                     items-center
-                    gap-2
+                    gap-1.5
                     "
                 >
 
                     <span
                         className="
-                        h-2.5
-                        w-2.5
+                        h-1.5
+                        w-1.5
                         rounded-full
                         bg-sky-400
                         animate-bounce
@@ -77,8 +77,8 @@ function TypingIndicator() {
 
                     <span
                         className="
-                        h-2.5
-                        w-2.5
+                        h-1.5
+                        w-1.5
                         rounded-full
                         bg-cyan-400
                         animate-bounce
@@ -88,8 +88,8 @@ function TypingIndicator() {
 
                     <span
                         className="
-                        h-2.5
-                        w-2.5
+                        h-1.5
+                        w-1.5
                         rounded-full
                         bg-blue-400
                         animate-bounce
