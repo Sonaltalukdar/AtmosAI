@@ -222,9 +222,9 @@ function AuthModal({ isOpen, onClose, startInLogin, onLoginSuccess }) {
                             tabIndex={-1}
                         >
                             {showPassword ? (
-                                <EyeOff size={18} />
-                            ) : (
                                 <Eye size={18} />
+                            ) : (
+                                <EyeOff size={18} />
                             )}
                         </button>
                     </div>
