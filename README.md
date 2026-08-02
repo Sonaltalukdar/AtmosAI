@@ -7,14 +7,14 @@ AtmosAI is a premium, AI-powered weather forecast web application featuring a gl
 ## ✨ Features
 
 - Real-Time Weather Data — Current conditions, air quality, hourly and weekly forecasts powered by the OpenWeather API.
-- AI Weather Assistant — A full-page conversational chat assistant (powered by Groq's LLaMA 3.3 70B) for natural-language weather queries and advice.
+- AI Weather Assistant — A full-page conversational chat assistant (powered by Groq's LLaMA 3.3 70B) for natural-language weather queries and advice, with live air quality data included in context for more accurate responses.
 - Interactive Weather Map — A Leaflet-based map with layer toggles, location search, and marker-based location info cards.
 - Favourites — Save and manage frequently checked locations for quick access.
-- User Authentication — Secure signup/login with JWT-based sessions and bcrypt password hashing.
+- User Authentication — Secure signup/login with JWT-based sessions, bcrypt password hashing, and a show/hide password toggle for easier input.
 - User Profile — View and manage account details.
 - Contact Form — Backend-integrated contact/support route with email delivery.
 - Dynamic Weather-Reactive Themes — Animated backgrounds (sunny, cloudy, rain, thunderstorm, and more) that shift based on live conditions.
-- Responsive Glassmorphism UI — Frosted-glass cards, smooth animations, and a fully responsive layout across devices.
+- Responsive Glassmorphism UI — Frosted-glass cards, smooth animations, and a fully responsive layout across devices, including mobile-optimized navbar, searchbar, and viewport handling. Designed as a dark-only interface by choice, in line with the Apple Weather / Nothing OS aesthetic.
 
 ---
 
@@ -144,7 +144,6 @@ The app will be available at `http://localhost:5173` (default Vite port).
 
 ## 🗺️ Roadmap
 
-- [ ] Theme toggle (light/dark mode) functionality
 - [ ] Weekly forecast chart visualizations
 - [ ] Reusable UI component library (Button, Modal, Input, GlassCard)
 - [ ] Loader/skeleton states across data-fetching components
