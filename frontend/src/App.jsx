@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Routes, Route, useNavigate } from "react-router-dom";
+import { Routes, Route, useNavigate, Navigate } from "react-router-dom";
 
 import Navbar from "./components/Navbar/Navbar.jsx";
 import Footer from "./components/Footer/Footer.jsx";
@@ -57,7 +57,13 @@ function AppShell() {
 
                 <Route
                     path="/"
-                    element={<Welcome onLoginSuccess={handleLoginSuccess} />}
+                    element={
+                        currentUser ? (
+                            <Navigate to="/home" replace />
+                        ) : (
+                            <Welcome onLoginSuccess={handleLoginSuccess} />
+                        )
+                    }
                 />
 
                 <Route
