@@ -84,6 +84,8 @@ router.post("/", upload.single("file"), async (req, res) => {
 
     const message = req.body.message;
 
+    // TEMP DEBUG — shows exactly what the server received.
+    // Remove these two console.log lines once file upload is confirmed working.
     console.log("Received message:", message);
     console.log("Received file:", req.file ? {
       name: req.file.originalname,
@@ -175,7 +177,7 @@ Answer based on the document content above.
       if (location && location.lat && location.lon) {
         try {
           const weatherResponse = await axios.get(
-            `https://atmosai-backend.onrender.com/api/weather/coords/${location.lat}/${location.lon}`
+            `https://atmosai-80iq.onrender.com/api/weather/coords/${location.lat}/${location.lon}`
           );
           const weather = weatherResponse.data;
 
@@ -189,8 +191,6 @@ Feels Like: ${weather.feels_like}°C
 Humidity: ${weather.humidity}%
 Wind Speed: ${weather.wind_speed} m/s
 Condition: ${weather.description}
-Air Quality Index (AQI): ${weather.aqi.value} (${weather.aqi.status})
-Pollutants — PM2.5: ${weather.aqi.pollutants[0].value}, PM10: ${weather.aqi.pollutants[1].value}, O3: ${weather.aqi.pollutants[2].value}, NO2: ${weather.aqi.pollutants[3].value}
 
 User Question:
 
@@ -228,8 +228,6 @@ Feels Like: ${weather.feels_like}°C
 Humidity: ${weather.humidity}%
 Wind Speed: ${weather.wind_speed} m/s
 Condition: ${weather.description}
-Air Quality Index (AQI): ${weather.aqi.value} (${weather.aqi.status})
-Pollutants — PM2.5: ${weather.aqi.pollutants[0].value}, PM10: ${weather.aqi.pollutants[1].value}, O3: ${weather.aqi.pollutants[2].value}, NO2: ${weather.aqi.pollutants[3].value}
 
 User Question:
 
@@ -266,6 +264,9 @@ Do not create fake weather information.
 
     let reply = completion.choices[0].message.content;
 
+    // Strip out the model's internal <think>...</think> reasoning block —
+    // this is the model "thinking out loud" and should never be shown to
+    // the user, only the final answer after it.
     reply = reply.replace(/<think>[\s\S]*?<\/think>/gi, "").trim();
 
     res.status(200).json({ reply });
